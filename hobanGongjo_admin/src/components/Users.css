@@ -1,0 +1,35 @@
+.Users {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  justify-content: space-between;
+  text-align: center;
+
+  padding: 20px 10px;
+}
+.Users div {
+  margin-bottom: 3px;
+}
+.Users .state {
+  border-right: 1px solid grey;
+  /* border-radius: 100%; */
+  flex: 0.2;
+}
+.Users .state_true {
+  background-color: grey;
+  color: white;
+}
+.Users .state_false {
+  color: white;
+  background-color: rgb(64, 105, 225);
+}
+.Users .userName {
+  flex: 0.6;
+}
+.Users .region {
+  flex: 0.4;
+}
+.Users .date {
+  flex: 0.4;
+}

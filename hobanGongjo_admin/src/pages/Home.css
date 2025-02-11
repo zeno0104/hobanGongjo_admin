@@ -1,0 +1,72 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* counselInfo */
+.Home .counselInfo {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 30px 20px;
+}
+.Home .counselInfo > div {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 40px 30px;
+}
+.Home .counselInfo .conuselText {
+  font-size: 15px;
+  color: white;
+}
+
+.Home .counselInfo .counselIncomplete {
+  background-color: rgb(64, 105, 225);
+}
+.Home .counselInfo .counselComplete {
+  background-color: grey;
+}
+.Home .counselInfo .counselCnt {
+  font-size: 30px;
+  color: white;
+}
+.Home .counselInfo .counselIncomplete .completeText {
+  font-size: 20px;
+}
+.Home .counselInfo .counselComplete {
+  background-color: grey;
+}
+/* reservationComplete */
+.Home .reservationComplete > div {
+  font-size: 30px;
+  border-top: 1px solid grey;
+  cursor: pointer;
+}
+
+.Home .reservationInstallInfo > div {
+  border-bottom: 1px solid grey;
+  padding: 20px 0px;
+}
+.Home .reservationInstallInfo > div:hover {
+  background-color: rgb(64, 105, 225);
+  color: white;
+  cursor: pointer;
+}
+
+/* installComplete */
+.Home .reservationInstallInfo .reservationConfirmed {
+  border-top: 1px solid grey;
+}
+.Home .installComplete > div:hover {
+  background-color: rgb(64, 105, 225);
+}
+.Home .installComplete > div {
+  font-size: 30px;
+  border-top: 1px solid grey;
+  cursor: pointer;
+}
+/* reservationInstallInfo */

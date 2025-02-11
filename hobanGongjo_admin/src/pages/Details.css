@@ -1,0 +1,23 @@
+.Details section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid grey;
+  padding: 20px 10px;
+}
+
+.Details .phone_number .phone_img {
+  width: 50px;
+}
+.Details .content {
+  display: flex;
+  flex-direction: column;
+}
+.Details .content .content_title {
+  border-bottom: 1px solid grey;
+}
+
+.Details .confirmBtn {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,23 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px;
+  background-color: rgb(64, 105, 225);
+}
+.Header > div {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+.Header .homeBtn {
+  cursor: pointer;
+  width: 50px;
+}
+
+.Header .title {
+}
+
+.Header .empty {
+  width: 50px;
+}
