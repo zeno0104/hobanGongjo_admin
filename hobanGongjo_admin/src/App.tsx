@@ -1,39 +1,35 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/Home";
-
 import { CounselIncomplete } from "./pages/CounselIncomplete";
 import { Details } from "./pages/Details";
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import { CounselComplete } from "./pages/CounselComplete";
-const mockData: Users = [
-  {
-    id: 1,
-    state: true,
-    userName: "안재훈",
-    region: "강북",
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    id: 2,
-    state: false,
-    userName: "김혜경",
-    region: "도봉",
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    id: 3,
-    state: true,
-    userName: "곽수빈",
-    region: "노원",
-    date: new Date().toLocaleDateString(),
-  },
-];
+import { getUserData } from "./apis/api";
+
 export const UserDataContext = createContext();
 
 function App() {
+  const [userData, setUserData] = useState([]);
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getUserData();
+      if (data && data.length > 0) {
+        setUserData(data);
+      }
+      setLoading(false); // 데이터 로드 후 로딩 상태 변경
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // 로딩 중일 때 표시할 내용
+  }
+
   return (
-    <UserDataContext.Provider value={mockData}>
+    <UserDataContext.Provider value={userData}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/counselIncomplete" element={<CounselIncomplete />} />

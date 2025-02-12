@@ -5,4 +5,14 @@
   background-color: rgb(64, 105, 225);
   color: white;
   border-radius: 100px;
+  font-size: 25px;
+}
+.button_reserveConfirm {
+  padding: 20px 10px;
+  background-color: grey;
+}
+
+.button_delete {
+  background-color: grey;
+  color: white;
 }

@@ -3,15 +3,26 @@
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import "./Home.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "../App";
+import { getUserData } from "../apis/api";
 export const Home = () => {
   const nav = useNavigate();
-  const data = useContext(UserDataContext);
-  const counselIncompleteCnt = data.filter(
-    (item) => item.state === false
+  const userData = useContext(UserDataContext);
+  const [updatedUserData, setUpdatedUserData] = useState(userData);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getUserData();
+      setUpdatedUserData(data);
+    };
+    fetchData();
+  }, []); // 컴포넌트가 마운트될 때 데이터 가져오기
+  const counselIncompleteCnt = updatedUserData.filter(
+    (item) => item.is_counsel_completed === false
   ).length;
-  const counselCompleteCnt = data.filter((item) => item.state === true).length;
+  const counselCompleteCnt = updatedUserData.filter(
+    (item) => item.is_counsel_completed === true
+  ).length;
   return (
     <div className="Home">
       <Header text={"호반공조 관리자"} />
@@ -31,10 +42,10 @@ export const Home = () => {
           <div className="counselCnt">{counselCompleteCnt}건</div>
         </div>
       </section>
-      <section className="reservationInstallInfo">
+      {/* <section className="reservationInstallInfo">
         <div className="reservationConfirmed">예약 확정건 {">"}</div>
         <div>설치 완료건 {">"}</div>
-      </section>
+      </section> */}
     </div>
   );
 };
