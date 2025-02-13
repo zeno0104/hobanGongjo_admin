@@ -31,7 +31,7 @@ Notification.requestPermission()
     return getToken(messaging, {
       vapidKey:
         "BPFSOm498XIcQEO53qcTksmAFTT-LxSdLm3nrnXr0N1Wpwv-OG4INTtg6KdqJp3XzbZTnewzDj2vj6ULM6bkTxE",
-    }); // VAPID 키를 추가해야 합니다.
+    });
   })
   .then((token) => {
     console.log("get token", token);
