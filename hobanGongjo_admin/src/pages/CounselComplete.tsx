@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { Header } from "../components/Header";
-import { Users } from "../components/Users";
-import "./CounselComplete.css";
-import { CurrentDataContext, UserDataContext } from "../App";
 import { Monthly } from "../components/Monthly";
+import { Users } from "../components/Users";
+import "./CounselIncomplete.css";
+import { CurrentDataContext, UserDataContext } from "../App";
 import { getUserData } from "../apis/api";
 
 type Data = {
@@ -37,7 +37,7 @@ export const CounselComplete = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [selectedDate]);
 
   // userData가 배열인지 확인
   if (!Array.isArray(updatedUserData)) {
@@ -61,7 +61,7 @@ export const CounselComplete = () => {
     });
 
   return (
-    <div className="CounselComplete">
+    <div className="CounselIncomplete">
       <Header text={"상담 완료건"} />
       <Monthly />
       <div className="totalCnt">총 {filterdData.length}건</div>

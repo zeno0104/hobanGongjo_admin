@@ -1,0 +1,32 @@
+{
+  "name": "호반공조",
+  "short_name": "HB",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFF1A7",
+  "description": "에어컨 설치의 모든 것!",
+  "icons": [
+    {
+      "src": "icons/hoban_logo_jpg",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "icons/hoban_logo.jpg",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icons/hoban_logo.jpg",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "icons/hoban_logo.jpg",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}
