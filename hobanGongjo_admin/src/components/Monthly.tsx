@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useContext } from "react";
 import "./Monthly.css";
+import { CurrentDataContext } from "../App";
 
 export const Monthly = () => {
   // 현재 월을 상태로 관리
-  const [currentDate, setCurrentDate] = useState(new Date());
-
+  const { currentDate, setCurrentDate } = useContext(CurrentDataContext);
   // 월을 줄이는 함수
   const decreaseMonth = () => {
     setCurrentDate((prevDate) => {

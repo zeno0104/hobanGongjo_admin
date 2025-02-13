@@ -21,7 +21,6 @@ type UsersProps = {
 };
 
 export const Users = ({ data }: UsersProps) => {
-  console.log("data다", data);
   const { id, is_counsel_completed, name, region, created_at } = data;
   const nav = useNavigate();
   const date = new Date(created_at).toLocaleDateString();

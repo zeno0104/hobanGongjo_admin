@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 import { Monthly } from "../components/Monthly";
 import { Users } from "../components/Users";
 import "./CounselIncomplete.css";
-import { UserDataContext } from "../App";
+import { CurrentDataContext, UserDataContext } from "../App";
 import { getUserData } from "../apis/api";
 // 상담 미완료건
 
@@ -23,14 +23,24 @@ type Data = {
 
 export const CounselIncomplete = () => {
   const userData = useContext(UserDataContext);
-  const [updatedUserData, setUpdatedUserData] = useState(userData);
+  const [updatedUserData, setUpdatedUserData] = useState<Data[]>(
+    userData || []
+  ); // 초기값을 빈 배열로 설정
+
+  const { currentDate } = useContext(CurrentDataContext);
+  const selectedDate = `${currentDate.getFullYear()}-${currentDate.getMonth()}`;
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUserData();
-      setUpdatedUserData(data);
+      if (data) {
+        // data가 null이 아닐 때만 업데이트
+        setUpdatedUserData(data);
+      }
     };
     fetchData();
-  }, []);
+  }, [selectedDate]);
+
   // userData가 배열인지 확인
   if (!Array.isArray(updatedUserData)) {
     console.error("userData는 배열이 아닙니다.");
@@ -45,7 +55,12 @@ export const CounselIncomplete = () => {
         item !== null &&
         "is_counsel_completed" in item
     )
-    .filter((item) => item.is_counsel_completed === false);
+    .filter((item) => {
+      const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
+        item.created_at
+      ).getMonth()}`;
+      return item.is_counsel_completed === false && userDate === selectedDate;
+    });
 
   return (
     <div className="CounselIncomplete">

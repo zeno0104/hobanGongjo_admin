@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { Users } from "../components/Users";
 import "./CounselComplete.css";
-import { UserDataContext } from "../App";
+import { CurrentDataContext, UserDataContext } from "../App";
 import { Monthly } from "../components/Monthly";
 import { getUserData } from "../apis/api";
 
@@ -22,14 +22,23 @@ type Data = {
 
 export const CounselComplete = () => {
   const userData = useContext(UserDataContext);
-  const [updatedUserData, setUpdatedUserData] = useState(userData);
+  const [updatedUserData, setUpdatedUserData] = useState<Data[]>(
+    userData || []
+  ); // 초기값을 빈 배열로 설정
+  const { currentDate } = useContext(CurrentDataContext);
+  const selectedDate = `${currentDate.getFullYear()}-${currentDate.getMonth()}`;
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUserData();
-      setUpdatedUserData(data);
+      if (data) {
+        // data가 null이 아닐 때만 업데이트
+        setUpdatedUserData(data);
+      }
     };
     fetchData();
   }, []);
+
   // userData가 배열인지 확인
   if (!Array.isArray(updatedUserData)) {
     console.error("userData는 배열이 아닙니다.");
@@ -44,10 +53,15 @@ export const CounselComplete = () => {
         item !== null &&
         "is_counsel_completed" in item
     )
-    .filter((item) => item.is_counsel_completed === true);
+    .filter((item) => {
+      const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
+        item.created_at
+      ).getMonth()}`;
+      return item.is_counsel_completed === true && userDate === selectedDate;
+    });
 
   return (
-    <div className="CounselIncomplete">
+    <div className="CounselComplete">
       <Header text={"상담 완료건"} />
       <Monthly />
       <div className="totalCnt">총 {filterdData.length}건</div>

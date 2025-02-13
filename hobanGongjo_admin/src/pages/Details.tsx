@@ -10,6 +10,7 @@ export const Details = () => {
   const params = useParams();
   const nav = useNavigate();
   const userData = useContext(UserDataContext);
+  const location = useLocation();
   const filteredData = userData.filter(
     (item) => Number(item.id) === Number(params.id)
   );
@@ -21,7 +22,6 @@ export const Details = () => {
     return null; // 컴포넌트 렌더링 중단
   }
 
-  const location = useLocation();
   const { type } = location.state;
   const {
     id,
