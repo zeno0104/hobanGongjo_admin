@@ -45,14 +45,7 @@ function App() {
   const [userData, setUserData] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [currentDate, setCurrentDate] = useState(new Date());
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때, 새로운 상담 신청을 감지하는 함수 호출
-    listenForNewRequests();
-  }, []);
-  useEffect(() => {
-    console.log("여기 실행됐어!");
-    requestNotificationPermission();
-  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUserData();
@@ -62,6 +55,9 @@ function App() {
       setLoading(false); // 데이터 로드 후 로딩 상태 변경
     };
     fetchData();
+    console.log("여기 실행됐어!");
+    requestNotificationPermission();
+    listenForNewRequests();
   }, []);
 
   if (loading) {
