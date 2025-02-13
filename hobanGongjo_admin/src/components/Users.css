@@ -1,8 +1,9 @@
 .Users {
   display: flex;
   align-items: center;
-  border-top: 1px solid grey;
+  /* border-top: 1px solid grey; */
   border-bottom: 1px solid grey;
+
   justify-content: space-between;
   text-align: center;
 
@@ -12,9 +13,10 @@
   margin-bottom: 3px;
 }
 .Users .state {
-  border-right: 1px solid grey;
   /* border-radius: 100%; */
   flex: 0.2;
+  display: flex;
+  justify-content: center;
 }
 .Users .state_true {
   background-color: grey;

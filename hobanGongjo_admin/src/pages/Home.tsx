@@ -65,7 +65,7 @@ export const Home = () => {
         </div>
       </section>
       <section className="reservationInstallInfo">
-        <div className="reservationConfirmed">예약 확정건 {">"}</div>
+        <div className="reservationConfirmed">설치 확정건 {">"}</div>
         <div>설치 완료건 {">"}</div>
       </section>
     </div>

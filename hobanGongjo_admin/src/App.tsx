@@ -8,7 +8,40 @@ import { createContext, useEffect, useState } from "react";
 import { CounselComplete } from "./pages/CounselComplete";
 import { getUserData } from "./apis/api";
 
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
+
+// Firebase 초기화
+const firebaseConfig = {
+  apiKey: "AIzaSyCR7PnvdfXTIw_6zYIvby8caInNBeHxejQ",
+  authDomain: "hobangongjo.firebaseapp.com",
+  projectId: "hobangongjo",
+  storageBucket: "hobangongjo.firebasestorage.app",
+  messagingSenderId: "111042203701",
+  appId: "1:111042203701:web:23e4de8e60c658f44c217c",
+  measurementId: "G-7FT6K5LZKY",
+};
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+// 허가 요청 및 토큰 받기
+Notification.requestPermission()
+  .then(() => {
+    return getToken(messaging, {
+      vapidKey:
+        "BPFSOm498XIcQEO53qcTksmAFTT-LxSdLm3nrnXr0N1Wpwv-OG4INTtg6KdqJp3XzbZTnewzDj2vj6ULM6bkTxE",
+    }); // VAPID 키를 추가해야 합니다.
+  })
+  .then((token) => {
+    console.log("get token", token);
+  })
+  .catch((err) => {
+    alert("Error getting permission or token");
+    console.error("fcm error : ", err);
+  });
 // Data 타입 정의
+
 type Data = {
   content: string;
   created_at: string;
