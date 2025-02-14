@@ -81,7 +81,6 @@ function App() {
   return (
     <UserDataContext.Provider value={userData}>
       <CurrentDataContext.Provider value={{ currentDate, setCurrentDate }}>
-        <div>뭘봐</div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/counselIncomplete" element={<CounselIncomplete />} />
