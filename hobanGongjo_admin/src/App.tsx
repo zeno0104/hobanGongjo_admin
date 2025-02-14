@@ -11,23 +11,7 @@ import { getUserData } from "./apis/api";
 import { listenForNewRequests } from "./apis/pushNotification";
 import { getFcmToken } from "./firebase/firebase";
 // firebase
-const registerServiceWorker = async () => {
-  if ("serviceWorker" in navigator) {
-    try {
-      const registration = await navigator.serviceWorker.register(
-        "/firebase-messaging-sw.js"
-      );
-      console.log("서비스 워커 등록 성공:", registration);
 
-      // FCM 토큰 가져오기
-      await getFcmToken(); // 이제 firebaseConfig.ts에서 getFcmToken을 호출합니다.
-    } catch (err) {
-      console.log("서비스 워커 등록 실패:", err);
-    }
-  } else {
-    console.log("서비스 워커를 지원하지 않는 브라우저입니다.");
-  }
-};
 // Firebase 초기화
 // 허가 요청 및 토큰 받기
 // Data 타입 정의
@@ -55,6 +39,23 @@ export const CurrentDataContext = createContext<{
   currentDate: new Date(),
   setCurrentDate: () => {}, // 기본값은 빈 함수로 설정
 });
+const registerServiceWorker = async () => {
+  if ("serviceWorker" in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register(
+        "/firebase-messaging-sw.js"
+      );
+      console.log("서비스 워커 등록 성공:", registration);
+
+      // FCM 토큰 가져오기
+      await getFcmToken(); // 이제 firebaseConfig.ts에서 getFcmToken을 호출합니다.
+    } catch (err) {
+      console.log("서비스 워커 등록 실패:", err);
+    }
+  } else {
+    console.log("서비스 워커를 지원하지 않는 브라우저입니다.");
+  }
+};
 
 function App() {
   // userData의 타입을 Data[]로 명시적으로 설정
