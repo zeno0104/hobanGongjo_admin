@@ -20,7 +20,8 @@
   padding: 40px 30px;
 }
 .Home .counselInfo .conuselText {
-  font-size: 14px;
+  width: 120px;
+  font-size: 15px;
   color: white;
 }
 
