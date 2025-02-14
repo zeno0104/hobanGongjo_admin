@@ -17,11 +17,12 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 40px 30px;
+  padding: 40px 10px;
 }
 .Home .counselInfo .conuselText {
-  font-size: 15px;
+  font-size: 14px;
   color: white;
+  white-space: nowrap;
 }
 
 .Home .counselInfo .counselIncomplete {
@@ -31,8 +32,9 @@
   background-color: grey;
 }
 .Home .counselInfo .counselCnt {
-  font-size: 20px;
+  font-size: 25px;
   color: white;
+  white-space: nowrap;
 }
 .Home .counselInfo .counselIncomplete .completeText {
   font-size: 20px;
