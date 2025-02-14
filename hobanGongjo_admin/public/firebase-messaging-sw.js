@@ -1,3 +1,5 @@
+// firebase-messaging-sw.js
+
 importScripts(
   "https://www.gstatic.com/firebasejs/10.7.2/firebase-app-compat.js"
 );
@@ -5,36 +7,27 @@ importScripts(
   "https://www.gstatic.com/firebasejs/10.7.2/firebase-messaging-compat.js"
 );
 
+// Firebase 앱 초기화
 firebase.initializeApp({
   apiKey: "AIzaSyCR7PnvdfXTIw_6zYIvby8caInNBeHxejQ",
   authDomain: "hobangongjo.firebaseapp.com",
   projectId: "hobangongjo",
   storageBucket: "hobangongjo.firebasestorage.app",
   messagingSenderId: "111042203701",
-  appId: "1:111042203701:web:23e4de8e60c658f44c217c",
-  measurementId: "G-7FT6K5LZKY",
+  appId: "1:111042203701:web:e6a3e8dc68640fb84c217c",
+  measurementId: "G-VCTCKT1PB2",
 });
 
+// FCM 메시징 인스턴스 가져오기
 const messaging = firebase.messaging();
 
+// 백그라운드 메시지 수신
 messaging.onBackgroundMessage((payload) => {
-  console.log(
-    "[firebase-messaging-sw.js] 백그라운드에서 메시지 수신: ",
-    payload
-  );
+  console.log("📩 백그라운드 푸시 알림 수신:", payload);
 
+  // 알림 표시
   self.registration.showNotification(payload.notification.title, {
     body: payload.notification.body,
-    icon: "/hoban_logo.jpg",
+    icon: "/icons/apple-touch-icon-57x57", // 아이콘 경로
   });
 });
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("/firebase-messaging-sw.js")
-    .then((registration) => {
-      console.log("Service Worker 등록 성공:", registration);
-    })
-    .catch((error) => {
-      console.error("Service Worker 등록 실패:", error);
-    });
-}

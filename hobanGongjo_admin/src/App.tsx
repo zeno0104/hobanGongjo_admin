@@ -8,9 +8,26 @@ import { createContext, useEffect, useState } from "react";
 import { CounselComplete } from "./pages/CounselComplete";
 import { getUserData } from "./apis/api";
 // firebase
-import { requestNotificationPermission } from "./notifications";
 import { listenForNewRequests } from "./apis/pushNotification";
+import { getFcmToken } from "./firebase/firebase";
+// firebase
+const registerServiceWorker = async () => {
+  if ("serviceWorker" in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register(
+        "/firebase-messaging-sw.js"
+      );
+      console.log("서비스 워커 등록 성공:", registration);
 
+      // FCM 토큰 가져오기
+      await getFcmToken(); // 이제 firebaseConfig.ts에서 getFcmToken을 호출합니다.
+    } catch (err) {
+      console.log("서비스 워커 등록 실패:", err);
+    }
+  } else {
+    console.log("서비스 워커를 지원하지 않는 브라우저입니다.");
+  }
+};
 // Firebase 초기화
 // 허가 요청 및 토큰 받기
 // Data 타입 정의
@@ -30,7 +47,6 @@ type Data = {
 
 // UserDataContext의 기본값을 빈 배열로 설정
 export const UserDataContext = createContext<Data[]>([]);
-
 // CurrentDataContext의 기본값을 현재 날짜와 빈 함수로 설정
 export const CurrentDataContext = createContext<{
   currentDate: Date;
@@ -55,9 +71,8 @@ function App() {
       setLoading(false); // 데이터 로드 후 로딩 상태 변경
     };
     fetchData();
-    console.log("여기 실행됐어!");
-    requestNotificationPermission();
     listenForNewRequests();
+    registerServiceWorker();
   }, []);
 
   if (loading) {
