@@ -4,6 +4,7 @@ import "./Home.css";
 import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "../App";
 import { getUserData } from "../apis/api";
+import { handleAllowNotification } from "../firebase/notification";
 
 // Data 타입 정의
 type Data = {
@@ -53,7 +54,15 @@ export const Home = () => {
           className="counselBtn counselIncomplete"
           onClick={() => nav("/counselIncomplete")}
         >
-          <div className="conuselText">상담 미완료건</div>
+          <div
+            className="conuselText"
+            onClick={() => {
+              console.log(handleAllowNotification);
+              console.log("클릭");
+            }}
+          >
+            상담 미완료건
+          </div>
           <div className="counselCnt">{counselIncompleteCnt}건</div>
         </div>
         <div

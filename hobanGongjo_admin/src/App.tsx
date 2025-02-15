@@ -50,7 +50,7 @@ function App() {
       setLoading(false);
     };
     fetchData();
-    handleAllowNotification();
+    // handleAllowNotification();
   }, []);
 
   if (loading) {
