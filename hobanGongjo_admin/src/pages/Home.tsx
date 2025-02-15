@@ -4,7 +4,8 @@ import "./Home.css";
 import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "../App";
 import { getUserData } from "../apis/api";
-import { handleAllowNotification } from "../firebase/notifications";
+// import { handleAllowNotification } from "../firebase/notifications";
+import { listenForNewRequests } from "../apis/pushNotification";
 
 // Data 타입 정의
 type Data = {
@@ -54,7 +55,7 @@ export const Home = () => {
           className="counselBtn counselIncomplete"
           onClick={() => nav("/counselIncomplete")}
         >
-          <div className="conuselText" onClick={handleAllowNotification}>
+          <div className="conuselText" onClick={listenForNewRequests}>
             상담 미완료건
           </div>
           <div className="counselCnt">{counselIncompleteCnt}건</div>
