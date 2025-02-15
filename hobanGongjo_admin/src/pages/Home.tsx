@@ -4,7 +4,6 @@ import "./Home.css";
 import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "../App";
 import { getUserData } from "../apis/api";
-import { handleAllowNotification } from "../firebase/notifications";
 
 // Data 타입 정의
 type Data = {
