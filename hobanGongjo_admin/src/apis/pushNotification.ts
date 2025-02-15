@@ -1,8 +1,6 @@
 import { supabase } from "../utils/SupabaseClient";
-import { requestNotificationPermission } from "../firebase/notifications";
 
 export async function listenForNewRequests() {
-  await requestNotificationPermission();
 
   supabase
     .channel("guest")
