@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-import "./firebase/firebase";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/Home";
@@ -11,7 +10,6 @@ import { getUserData } from "./apis/api";
 // firebase
 import { listenForNewRequests } from "./apis/pushNotification";
 import { getFcmToken } from "./firebase/firebase";
-// import { getFcmToken } from "./firebase/firebase";
 // firebase
 
 // Firebase 초기화
