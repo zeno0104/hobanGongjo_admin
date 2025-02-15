@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import "./core/notification/settingFCM";
+import "./firebase/firebase";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/Home";
@@ -8,9 +8,11 @@ import { Details } from "./pages/Details";
 import { createContext, useEffect, useState } from "react";
 import { CounselComplete } from "./pages/CounselComplete";
 import { getUserData } from "./apis/api";
-import { handleAllowNotification } from "./firebase/notifications";
 // firebase
-// import { handleAllowNotification } from "./firebase/notifications";
+import { listenForNewRequests } from "./apis/pushNotification";
+import { getFcmToken } from "./firebase/firebase";
+// import { getFcmToken } from "./firebase/firebase";
+// firebase
 
 // Firebase 초기화
 // 허가 요청 및 토큰 받기
@@ -39,6 +41,23 @@ export const CurrentDataContext = createContext<{
   currentDate: new Date(),
   setCurrentDate: () => {}, // 기본값은 빈 함수로 설정
 });
+const registerServiceWorker = async () => {
+  if ("serviceWorker" in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register(
+        "/firebase-messaging-sw.js"
+      );
+      console.log("서비스 워커 등록 성공:", registration);
+
+      // FCM 토큰 가져오기
+      await getFcmToken(); // 이제 firebaseConfig.ts에서 getFcmToken을 호출합니다.
+    } catch (err) {
+      console.log("서비스 워커 등록 실패:", err);
+    }
+  } else {
+    console.log("서비스 워커를 지원하지 않는 브라우저입니다.");
+  }
+};
 
 function App() {
   // userData의 타입을 Data[]로 명시적으로 설정
@@ -55,15 +74,13 @@ function App() {
       setLoading(false); // 데이터 로드 후 로딩 상태 변경
     };
     fetchData();
-    // firebase
-    handleAllowNotification();
+    listenForNewRequests();
+    registerServiceWorker();
   }, []);
 
   if (loading) {
     return <div>Loading...</div>; // 로딩 중일 때 표시할 내용
   }
-  // 사용자의 푸시 알림 권한 요청
-
   return (
     <UserDataContext.Provider value={userData}>
       <CurrentDataContext.Provider value={{ currentDate, setCurrentDate }}>
