@@ -17,8 +17,7 @@ export async function handleAllowNotification() {
 async function getDeviceToken() {
     // 권한이 허용된 후에 토큰을 가져옴
     await getToken(messaging, {
-      vapidKey:
-        "BIi_HzVVxY1cOdt8r0MuT7M_vu9z956nEm6R_3WxAZ7QtDrGHzBgPfH5mHJX7Vty9H2vPfKvfDIOCIobHWToUPo",
+      vapidKey:import.meta.env.VITE_VAPID_KEY,
     })
       .then((currentToken) => {
         if (currentToken) {
