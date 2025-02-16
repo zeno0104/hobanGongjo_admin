@@ -19,7 +19,7 @@ type Data = {
   region: string;
   type: string;
 };
-
+console.log(import.meta.env.VITE_SUPABASE_URL);
 export const Home = () => {
   const nav = useNavigate();
   const userData = useContext(UserDataContext) as Data[]; // UserDataContext의 타입을 명시적으로 지정
