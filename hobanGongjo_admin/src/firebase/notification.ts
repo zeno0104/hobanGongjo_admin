@@ -3,7 +3,6 @@ import { messaging } from '../../core/notification/settingFCM';
 import { supabase } from '../utils/SupabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 
-
 export async function handleAllowNotification() {
   const permission = await Notification.requestPermission();
   
@@ -22,6 +21,7 @@ export async function handleAllowNotification() {
       console.log("사용자가 알림 권한을 결정하지 않았습니다.");
   }
 }
+
 async function getDeviceToken(): Promise<string | null> {
   try {
       const currentToken = await getToken(messaging, {
@@ -40,18 +40,17 @@ async function getDeviceToken(): Promise<string | null> {
       return null;
   }
 }
+
 function registerServiceWorker() {
     navigator.serviceWorker
       .register("firebase-messaging-sw.js")
       .then(function (registration) {
         console.log("Service Worker 등록 성공:", registration);
-        // alert(`Service Worker 등록 성공:, ${registration}`);
       })
       .catch(function (error) {
         console.log("Service Worker 등록 실패:", error);
-        // alert(`Service Worker 등록 실패:, ${error}`);
       });
-  }
+}
 
 function getOrCreateUserId() {
   let userId = localStorage.getItem('user_id');
@@ -63,12 +62,16 @@ function getOrCreateUserId() {
   
   return userId;
 }
+
 async function saveFcmToken(fcmToken: string) {
   const userId = getOrCreateUserId();
+  
+  // `fcm_token`과 `user_id`를 `localStorage`에 저장
+  localStorage.setItem('fcm_token', fcmToken);
+
   const { error } = await supabase
-      .from("profiles")
-      .update({ fcm_token: fcmToken })
-      .eq("id", userId);
+    .from("profiles")
+    .upsert({ id: userId, fcm_token: fcmToken });  // Upsert to avoid duplicates
 
   if (error) {
       console.error("Error saving FCM token:", error);
