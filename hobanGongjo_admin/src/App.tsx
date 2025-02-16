@@ -9,7 +9,7 @@ import { createContext, useEffect, useState } from "react";
 import { CounselComplete } from "./pages/CounselComplete";
 import { getUserData } from "./apis/api";
 import { handleAllowNotification } from "./firebase/notification";
-import useGuestSubscription from "./hooks/useGuestSubscription";
+// import useGuestSubscription from "./hooks/useGuestSubscription";
 
 // Data 타입 정의
 type Data = {
@@ -37,7 +37,7 @@ export const CurrentDataContext = createContext<{
   setCurrentDate: () => {}, // 기본값은 빈 함수로 설정
 });
 function App() {
-  useGuestSubscription(); // ✅ 여기에서 실행 (useEffect 내부 X)
+  // useGuestSubscription(); // ✅ 여기에서 실행 (useEffect 내부 X)
 
   const [userData, setUserData] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true);
