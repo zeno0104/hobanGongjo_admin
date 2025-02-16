@@ -35,3 +35,6 @@
 |---|---|
 | <p align="center"><img src="https://github.com/user-attachments/assets/1617bcd9-b8cb-4c69-aa28-bd3f3ae7b261" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/e5a4265a-d70b-45ec-805a-16758a11fd66" width="100%" /></p> |
 
+# 🌱 추후 개발할 내용
+- 설치 확정건 리스트 및 설치 완료건 확인 리스트 기능
+- 티맵 연동
