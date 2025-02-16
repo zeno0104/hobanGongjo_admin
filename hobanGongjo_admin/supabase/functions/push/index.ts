@@ -23,7 +23,6 @@ Deno.serve(async (req) => {
     const payload: WebhookPayload = await req.json()
     console.log("📩 Webhook Payload:", payload)
 
-    // 🔥 모든 Admin의 FCM 토큰 가져오기 (`role = 'admin'`)
     const { data, error } = await supabase
       .from('profiles')
       .select('fcm_token')

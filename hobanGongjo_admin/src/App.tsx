@@ -7,7 +7,6 @@ import { Details } from "./pages/Details";
 import { CounselComplete } from "./pages/CounselComplete";
 import { getUserData } from "./apis/api";
 import { handleAllowNotification } from "./firebase/notification";
-import { useFCM } from "./firebase/useFCM";
 
 type Data = {
   content: string;
@@ -49,11 +48,11 @@ function App() {
     handleAllowNotification();
   }, []);
 
-  useFCM(); // ✅ 여기서 FCM 메시지 리스너 실행
-
   if (loading) {
     return <div>Loading...</div>;
   }
+  console.log(localStorage.getItem("user_id"));
+  console.log(localStorage.getItem("fcm_token"));
 
   return (
     <UserDataContext.Provider value={userData}>
