@@ -73,7 +73,7 @@ const sendPushNotification = async (fcmToken: string, body: string, accessToken:
             token: fcmToken,
             notification: {
               title: `호반공조 알리미`,
-              body: body,  // Webhook에서 받은 메시지
+              body: "새로운 상담 신청이 들어왔습니다.",  // Webhook에서 받은 메시지
             },
           },
         }),
