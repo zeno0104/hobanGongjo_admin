@@ -21,12 +21,13 @@ Deno.serve(async (req) => {
   try {
     const payload: WebhookPayload = await req.json()
     console.log("📩 Webhook Payload:", payload)
+    const userId = localStorage.getItem('user_id');
 
     // 🔥 Admin의 FCM 토큰 가져오기 (profiles 테이블에서 id=Admin UUID)
     const { data, error } = await supabase
       .from('profiles')
       .select('fcm_token')
-      .eq('id', "ae359e55-71e0-4b66-883d-6b16a7ae68a2")  // Admin ID (고정)
+      .eq('id', userId)  // Admin ID (고정)
       .single()
 
     if (error || !data || !data.fcm_token) {
@@ -54,8 +55,8 @@ Deno.serve(async (req) => {
           message: {
             token: fcmToken,
             notification: {
-              title: `새로운 알림`,
-              body: payload.record.body,
+              title: `호반공조 알리미`,
+              body: "새로운 상담 신청이 들어왔습니다.",
             },
           },
         }),
