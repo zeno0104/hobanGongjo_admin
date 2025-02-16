@@ -1,18 +1,14 @@
-/* eslint-disable react-refresh/only-export-components */
 import "../core/notification/settingFCM";
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
+import { useEffect, useState, createContext } from "react";
 import { Home } from "./pages/Home";
 import { CounselIncomplete } from "./pages/CounselIncomplete";
 import { Details } from "./pages/Details";
-import { createContext, useEffect, useState } from "react";
 import { CounselComplete } from "./pages/CounselComplete";
 import { getUserData } from "./apis/api";
 import { handleAllowNotification } from "./firebase/notification";
 import { useFCM } from "./firebase/useFCM";
-// import useGuestSubscription from "./hooks/useGuestSubscription";
 
-// Data 타입 정의
 type Data = {
   content: string;
   created_at: string;
@@ -27,23 +23,19 @@ type Data = {
   type: string;
 };
 
-// UserDataContext의 기본값을 빈 배열로 설정
 export const UserDataContext = createContext<Data[]>([]);
-// CurrentDataContext의 기본값을 현재 날짜와 빈 함수로 설정
 export const CurrentDataContext = createContext<{
   currentDate: Date;
   setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
 }>({
   currentDate: new Date(),
-  setCurrentDate: () => {}, // 기본값은 빈 함수로 설정
+  setCurrentDate: () => {},
 });
-function App() {
-  // useGuestSubscription(); // ✅ 여기에서 실행 (useEffect 내부 X)
 
+function App() {
   const [userData, setUserData] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
-  useFCM();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +48,8 @@ function App() {
     fetchData();
     handleAllowNotification();
   }, []);
+
+  useFCM(); // ✅ 여기서 FCM 메시지 리스너 실행
 
   if (loading) {
     return <div>Loading...</div>;
