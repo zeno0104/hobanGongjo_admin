@@ -9,6 +9,7 @@ import { createContext, useEffect, useState } from "react";
 import { CounselComplete } from "./pages/CounselComplete";
 import { getUserData } from "./apis/api";
 import { handleAllowNotification } from "./firebase/notification";
+import { useFCM } from "./firebase/useFCM";
 // import useGuestSubscription from "./hooks/useGuestSubscription";
 
 // Data 타입 정의
@@ -42,6 +43,7 @@ function App() {
   const [userData, setUserData] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
+  useFCM();
 
   useEffect(() => {
     const fetchData = async () => {
