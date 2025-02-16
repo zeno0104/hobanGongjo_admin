@@ -1,37 +1,44 @@
 import { getToken } from 'firebase/messaging';
 import { messaging } from '../../core/notification/settingFCM';
+import { supabase } from '../utils/SupabaseClient';
+import { v4 as uuidv4 } from 'uuid';
+
 
 export async function handleAllowNotification() {
-    const permission = await Notification.requestPermission();
-    
-      if (permission === 'granted') {
-        console.log('알림 권한이 허용되었습니다.');
-      } else if (permission === 'denied') {
-        console.log('알림 권한이 거부되었습니다.');
-      } else {
-        console.log('사용자가 알림 권한을 결정하지 않았습니다.');
+  const permission = await Notification.requestPermission();
+  
+  if (permission === "granted") {
+      console.log("알림 권한이 허용되었습니다.");
+      registerServiceWorker();
+      
+      // 🔥 FCM 토큰을 받아서 saveFcmToken에 전달
+      const fcmToken = await getDeviceToken();
+      if (fcmToken) {
+          await saveFcmToken(fcmToken);
       }
-      registerServiceWorker()
-      await getDeviceToken(); 
+  } else if (permission === "denied") {
+      console.log("알림 권한이 거부되었습니다.");
+  } else {
+      console.log("사용자가 알림 권한을 결정하지 않았습니다.");
+  }
 }
-async function getDeviceToken() {
-    // 권한이 허용된 후에 토큰을 가져옴
-    await getToken(messaging, {
-      vapidKey:import.meta.env.VITE_VAPID_KEY,
-    })
-      .then((currentToken) => {
-        if (currentToken) {
-          // 토큰을 서버로 전송하거나 UI 업데이트
-          console.log("토큰: ", currentToken);
-        //   alert("토큰: " + currentToken);
-        } else {
-          console.log("토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.");
-        }
-      })
-      .catch((err) => {
-        // alert(err);
-        console.log("토큰을 가져오는 중 에러 발생: ", err);
+async function getDeviceToken(): Promise<string | null> {
+  try {
+      const currentToken = await getToken(messaging, {
+          vapidKey: import.meta.env.VITE_VAPID_KEY,
       });
+
+      if (currentToken) {
+          console.log("토큰: ", currentToken);
+          return currentToken; // 🔥 토큰을 반환하도록 수정
+      } else {
+          console.log("토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.");
+          return null;
+      }
+  } catch (err) {
+      console.error("토큰을 가져오는 중 에러 발생: ", err);
+      return null;
+  }
 }
 function registerServiceWorker() {
     navigator.serviceWorker
@@ -45,3 +52,27 @@ function registerServiceWorker() {
         // alert(`Service Worker 등록 실패:, ${error}`);
       });
   }
+
+function getOrCreateUserId() {
+  let userId = localStorage.getItem('user_id');
+  
+  if (!userId) {
+    userId = uuidv4(); // 새로운 UUID 생성
+    localStorage.setItem('user_id', userId);
+  }
+  
+  return userId;
+}
+async function saveFcmToken(fcmToken: string) {
+  const userId = getOrCreateUserId();
+  const { error } = await supabase
+      .from("profiles")
+      .update({ fcm_token: fcmToken })
+      .eq("id", userId);
+
+  if (error) {
+      console.error("Error saving FCM token:", error);
+  } else {
+      console.log("FCM token saved successfully!");
+  }
+}
