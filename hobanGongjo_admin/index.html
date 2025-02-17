@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="theme-color" content="#FFF1A7" />
-    <!-- <link rel="icon" href="icons/hoban_logo.jpg" type="image/png" /> -->
     <link rel="icon" type="image/svg+xml" href="/hoban_logo.jpg" />
     <link
       rel="alternate icon"
@@ -11,7 +10,7 @@
       type="ico"
       sizes="16x16"
     />
-    <link rel="apple-touch-icon" href="icons/hoban_logo.jpg" sizes="180x180" />
+    <link rel="apple-touch-icon" href="/hoban_logo.jpg" sizes="180x180" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
     <title>호반공조</title>
@@ -24,15 +23,13 @@
     <script type="module" src="/src/main.tsx"></script>
     <script>
       if ("serviceWorker" in navigator) {
-        // Register a service worker hosted at the root of the
-        // site using the default scope.
         navigator.serviceWorker
-          .register("/firebase-messaging-sw.js")
+          .register("/sw.js") // PWA 캐싱을 위한 서비스 워커 등록
           .then((registration) => {
             console.log("Service worker registration succeeded:", registration);
           })
           .catch((err) => {
-            console.log("Service worker registration failed:", err); <!-- 수정된 부분 -->
+            console.log("Service worker registration failed:", err);
           });
       } else {
         console.log("Service workers are not supported.");
