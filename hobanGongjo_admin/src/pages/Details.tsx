@@ -1,7 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import "./Details.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "../App";
 import { DetailContent } from "../components/DetailContent";
 
@@ -13,9 +13,9 @@ type StatusType =
   | "installFinished";
 
 type Data = {
+  id: number;
   content: string;
   created_at: string;
-  id: number;
   install_location: string;
   install_type: string;
   name: string;
@@ -27,42 +27,41 @@ type Data = {
 
 export const Details = () => {
   const params = useParams();
-  const nav = useNavigate();
-  const userData = useContext(UserDataContext) as Data[] | null; // 🔥 명확한 타입 지정
+  const { userData } = useContext(UserDataContext);
 
-  // userData가 null이거나 배열이 아닐 경우 대비
-  if (!Array.isArray(userData)) {
-    console.error(
-      "UserDataContext에서 받은 데이터가 유효하지 않습니다.",
-      userData
+  // selectedData 상태에 Data | null 타입 지정
+  const [selectedData, setSelectedData] = useState<Data | null>(null);
+
+  useEffect(() => {
+    if (!Array.isArray(userData)) {
+      console.error(
+        "UserDataContext에서 받은 데이터가 유효하지 않습니다.",
+        userData
+      );
+      return;
+    }
+
+    // 🔥 데이터 필터링
+    const filteredData = userData.filter(
+      (item) => Number(item.id) === Number(params.id)
     );
-    return null;
-  }
 
-  // 🔥 데이터 필터링
-  const filteredData = userData.filter(
-    (item) => Number(item.id) === Number(params.id)
-  );
-
-  // 🔥 filteredData가 비어 있으면 처리
-  if (filteredData.length === 0) {
-    window.alert("존재하지 않는 데이터입니다.");
-    nav("/", { replace: true });
-    return null; // 렌더링 중단
-  }
-
-  const selectedData = filteredData[0];
-
-  // 🔥 필수 속성 확인
-  if (!selectedData.status) {
-    console.error("데이터에 'status' 속성이 없습니다.", selectedData);
-    return null;
-  }
+    if (filteredData.length > 0) {
+      setSelectedData(filteredData[0]);
+    } else {
+      setSelectedData(null); // 데이터가 없으면 null 설정
+    }
+  }, [userData, params.id]);
 
   return (
     <div className="Details">
       <Header text={"상세 내용"} />
-      <DetailContent data={selectedData} />
+      {/* selectedData가 null일 경우, 에러를 방지하도록 처리 */}
+      {selectedData ? (
+        <DetailContent data={selectedData} />
+      ) : (
+        <p>데이터가 없습니다.</p>
+      )}
     </div>
   );
 };

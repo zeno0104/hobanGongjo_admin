@@ -20,9 +20,9 @@
   padding: 40px 10px;
 }
 .Home .counselInfo .conuselText {
-  font-size: 14px;
+  font-size: 18px;
   color: white;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .Home .counselInfo .counselIncomplete {
@@ -50,7 +50,6 @@
 }
 
 .Home .reservationInstallInfo > div {
-  border-bottom: 1px solid grey;
   padding: 20px 0px;
 }
 .Home .reservationInstallInfo > div:hover {
@@ -61,14 +60,13 @@
 
 /* installComplete */
 .Home .reservationInstallInfo .reservationConfirmed {
-  border-top: 1px solid grey;
+  border: 1px solid grey;
 }
 .Home .installComplete > div:hover {
   background-color: rgb(64, 105, 225);
 }
 .Home .installComplete > div {
   font-size: 30px;
-  border-top: 1px solid grey;
   cursor: pointer;
 }
 /* reservationInstallInfo */
@@ -78,4 +76,11 @@
   padding: 10px 10px;
   border-radius: 50%;
   margin-left: 10px;
+  font-size: 20px;
+}
+.installText {
+  font-size: 20px;
+}
+.reservationConfirmedFinished {
+  border-bottom: 1px solid grey;
 }

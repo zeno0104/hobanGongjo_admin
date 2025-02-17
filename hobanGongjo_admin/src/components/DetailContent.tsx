@@ -6,6 +6,8 @@ import {
   updateInstallFinished,
 } from "../apis/api";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserDataContext } from "../App";
 
 // ✅ status 타입 정의
 type StatusType =
@@ -64,13 +66,14 @@ export const DetailContent = ({ data }: { data: Data }) => {
     type,
     status,
   } = data;
-
+  const { fetchData, userData, setUserData } = useContext(UserDataContext);
   const nav = useNavigate();
   const changedProductType = JSON.parse(type);
 
   const confirmBtnHandler = async () => {
     if (window.confirm("상담을 완료하시겠습니까?")) {
       await updateCounselData(id);
+      await fetchData();
       window.alert("상담이 완료되었습니다.");
       nav("/", { replace: true });
     }
@@ -79,6 +82,7 @@ export const DetailContent = ({ data }: { data: Data }) => {
   const installConfirm = async () => {
     if (window.confirm("설치를 확정하시겠습니까?")) {
       await updateInstallConfirmData(id);
+      await fetchData();
       window.alert("설치가 확정되었습니다.");
       nav("/", { replace: true });
     }
@@ -87,6 +91,7 @@ export const DetailContent = ({ data }: { data: Data }) => {
   const installFinished = async () => {
     if (window.confirm("설치를 완료하시겠습니까?")) {
       await updateInstallFinished(id);
+      await fetchData();
       window.alert("설치가 완료되었습니다.");
       nav("/", { replace: true });
     }
@@ -95,6 +100,9 @@ export const DetailContent = ({ data }: { data: Data }) => {
   const deleteBtnHandler = async () => {
     if (window.confirm("상담 내역을 삭제하시겠습니까?")) {
       await deleteUserData(id);
+      // userData에서 삭제된 아이템을 반영한 후, 상태를 업데이트하여 UI를 리렌더링
+      const updatedData = userData.filter((item) => item.id !== id);
+      setUserData(updatedData);
       window.alert("상담 내역을 삭제했습니다.");
       nav("/", { replace: true });
     }
@@ -145,7 +153,7 @@ export const DetailContent = ({ data }: { data: Data }) => {
         {status !== "installFinished" && userStatus[status]?.text ? (
           <div className="confirmBtnCon">
             <Button
-              text={userStatus[status].text!} // `text`는 `installFinished`에 없기 때문에 `!` 사용
+              text={userStatus[status].text!}
               // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
               onClick={buttonHandler[status]?.onClick!} // `onClick`이 없는 경우 방지
               type={"reserve_confirm"}

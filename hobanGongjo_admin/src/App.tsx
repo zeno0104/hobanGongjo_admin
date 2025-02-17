@@ -9,20 +9,36 @@ import { getUserData } from "./apis/api";
 import { handleAllowNotification } from "./firebase/notification";
 import { InstallConfirm } from "./pages/InstallConfirm";
 import { InstallFinished } from "./pages/InstallFinished";
+type StatusType =
+  | "counselIncompleted"
+  | "counselCompleted"
+  | "installConfirm"
+  | "installFinished";
 
 type Data = {
+  id: number;
   content: string;
   created_at: string;
-  id: number;
   install_location: string;
   install_type: string;
   name: string;
   phone_number: string;
   region: string;
   type: string;
+  status: StatusType;
 };
 
-export const UserDataContext = createContext<Data[]>([]);
+// UserDataContext 타입 수정
+export const UserDataContext = createContext<{
+  userData: Data[];
+  fetchData: () => Promise<void>;
+  setUserData: React.Dispatch<React.SetStateAction<Data[]>>; // setUserData 추가
+}>({
+  userData: [],
+  fetchData: async () => {},
+  setUserData: () => {}, // 빈 함수 기본값 설정
+});
+
 export const CurrentDataContext = createContext<{
   currentDate: Date;
   setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
@@ -36,14 +52,15 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
 
+  const fetchData = async () => {
+    const data = await getUserData();
+    if (data && data.length > 0) {
+      setUserData(data);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getUserData();
-      if (data && data.length > 0) {
-        setUserData(data);
-      }
-      setLoading(false);
-    };
     fetchData();
     handleAllowNotification();
   }, []);
@@ -51,11 +68,9 @@ function App() {
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(localStorage.getItem("user_id"));
-  // console.log(localStorage.getItem("fcm_token"));
 
   return (
-    <UserDataContext.Provider value={userData}>
+    <UserDataContext.Provider value={{ userData, fetchData, setUserData }}>
       <CurrentDataContext.Provider value={{ currentDate, setCurrentDate }}>
         <Routes>
           <Route path="/" element={<Home />} />
