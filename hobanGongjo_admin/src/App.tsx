@@ -52,7 +52,8 @@ function App() {
     return <div>Loading...</div>;
   }
   console.log(localStorage.getItem("user_id"));
-  console.log(localStorage.getItem("fcm_token"));
+  // console.log(localStorage.getItem("fcm_token"));
+  console.log("메롱메롱");
 
   return (
     <UserDataContext.Provider value={userData}>
