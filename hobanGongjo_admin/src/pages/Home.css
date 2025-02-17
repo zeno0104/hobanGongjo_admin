@@ -72,3 +72,10 @@
   cursor: pointer;
 }
 /* reservationInstallInfo */
+.installConfirmCnt {
+  background-color: rgb(64, 105, 225);
+  color: white;
+  padding: 10px 10px;
+  border-radius: 50%;
+  margin-left: 10px;
+}

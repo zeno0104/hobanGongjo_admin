@@ -12,12 +12,11 @@ type Data = {
   id: number;
   install_location: string;
   install_type: string;
-  is_counsel_completed: boolean;
-  is_reserve_completed: boolean;
   name: string;
   phone_number: string;
   region: string;
   type: string;
+  status: string;
 };
 
 export const CounselComplete = () => {
@@ -46,19 +45,12 @@ export const CounselComplete = () => {
   }
 
   // 각 요소가 Data 타입인지 확인
-  const filterdData = updatedUserData
-    .filter(
-      (item): item is Data =>
-        typeof item === "object" &&
-        item !== null &&
-        "is_counsel_completed" in item
-    )
-    .filter((item) => {
-      const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
-        item.created_at
-      ).getMonth()}`;
-      return item.is_counsel_completed === true && userDate === selectedDate;
-    });
+  const filterdData = updatedUserData.filter((item) => {
+    const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
+      item.created_at
+    ).getMonth()}`;
+    return item.status === "counselCompleted" && userDate === selectedDate;
+  });
 
   return (
     <div className="CounselIncomplete">

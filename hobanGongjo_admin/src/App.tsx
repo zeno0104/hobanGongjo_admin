@@ -7,6 +7,8 @@ import { Details } from "./pages/Details";
 import { CounselComplete } from "./pages/CounselComplete";
 import { getUserData } from "./apis/api";
 import { handleAllowNotification } from "./firebase/notification";
+import { InstallConfirm } from "./pages/InstallConfirm";
+import { InstallFinished } from "./pages/InstallFinished";
 
 type Data = {
   content: string;
@@ -14,8 +16,6 @@ type Data = {
   id: number;
   install_location: string;
   install_type: string;
-  is_counsel_completed: boolean;
-  is_reserve_completed: boolean;
   name: string;
   phone_number: string;
   region: string;
@@ -53,7 +53,6 @@ function App() {
   }
   console.log(localStorage.getItem("user_id"));
   // console.log(localStorage.getItem("fcm_token"));
-  console.log("메롱메롱");
 
   return (
     <UserDataContext.Provider value={userData}>
@@ -63,6 +62,8 @@ function App() {
           <Route path="/counselIncomplete" element={<CounselIncomplete />} />
           <Route path="/counselComplete" element={<CounselComplete />} />
           <Route path="/details/:id" element={<Details />} />
+          <Route path="/installConfirm" element={<InstallConfirm />} />
+          <Route path="/installFinished" element={<InstallFinished />} />
         </Routes>
       </CurrentDataContext.Provider>
     </UserDataContext.Provider>

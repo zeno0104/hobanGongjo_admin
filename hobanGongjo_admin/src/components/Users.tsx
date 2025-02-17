@@ -7,12 +7,11 @@ type Data = {
   id: number;
   install_location: string;
   install_type: string;
-  is_counsel_completed: boolean;
-  is_reserve_completed: boolean;
   name: string;
   phone_number: string;
   region: string;
   type: string;
+  status: string;
 };
 
 // props 타입 정의
@@ -21,22 +20,41 @@ type UsersProps = {
 };
 
 export const Users = ({ data }: UsersProps) => {
-  const { id, is_counsel_completed, name, region, created_at } = data;
+  const { id, name, region, created_at, status } = data;
   const nav = useNavigate();
   const date = new Date(created_at).toLocaleDateString();
+  const userStatus = {
+    counselIncompleted: {
+      status: "상담 미완료",
+      text: "상담 완료",
+      type: "reserve_confirm",
+    },
+    counselCompleted: {
+      status: "상담 완료",
+      text: "설치 확정",
+      type: "reserve_confirm",
+    },
+    installConfirm: {
+      status: "설치 확정",
+      text: "설치 완료",
+      type: "reserve_confirm",
+    },
+    installFinished: {
+      status: "설치 완료",
+      type: "reserve_confirm",
+    },
+  };
 
   return (
     <div
       className="Users"
       onClick={() => {
         nav(`/details/${id}`, {
-          state: { type: is_counsel_completed ? true : false },
+          state: { type: status },
         });
       }}
     >
-      <div className={`state state_${is_counsel_completed}`}>
-        {is_counsel_completed ? "완료" : "미완료"}
-      </div>
+      <div className={`state state_${status}`}>{userStatus[status].status}</div>
       <div className="userName">{name}</div>
       <div className="region">{region}</div>
       <div className="date">{date}</div>

@@ -1,12 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { Monthly } from "../components/Monthly";
-import { Users } from "../components/Users";
-import "./CounselIncomplete.css";
 import { CurrentDataContext, UserDataContext } from "../App";
 import { getUserData } from "../apis/api";
-// 상담 미완료건
-
+import { Users } from "../components/Users";
 type Data = {
   content: string;
   created_at: string;
@@ -19,8 +16,7 @@ type Data = {
   type: string;
   status: string;
 };
-
-export const CounselIncomplete = () => {
+export const InstallConfirm = () => {
   const userData = useContext(UserDataContext);
   const [updatedUserData, setUpdatedUserData] = useState<Data[]>(
     userData || []
@@ -51,12 +47,12 @@ export const CounselIncomplete = () => {
     const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
       item.created_at
     ).getMonth()}`;
-    return item.status === "counselIncompleted" && userDate === selectedDate;
+    return item.status === "installConfirm" && userDate === selectedDate;
   });
 
   return (
     <div className="CounselIncomplete">
-      <Header text={"상담 미완료건"} />
+      <Header text={"설치 확정건"} />
       <Monthly />
       <div className="totalCnt">총 {filterdData.length}건</div>
       {filterdData.map((item) => (

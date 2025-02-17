@@ -1,0 +1,24 @@
+.monthly {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+  border-bottom: 1px solid grey;
+}
+.monthly .leftBtn {
+  border: 1px solid grey;
+  padding: 20px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.monthly .rightBtn {
+  border: 1px solid grey;
+  padding: 20px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.totalCnt {
+  padding: 20px 15px;
+  border-bottom: 1px solid grey;
+}

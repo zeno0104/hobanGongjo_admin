@@ -12,16 +12,15 @@ type Data = {
   id: number;
   install_location: string;
   install_type: string;
-  is_counsel_completed: boolean;
-  is_reserve_completed: boolean;
   name: string;
   phone_number: string;
   region: string;
   type: string;
+  status: string;
 };
 export const Home = () => {
   const nav = useNavigate();
-  const userData = useContext(UserDataContext) as Data[]; // UserDataContext의 타입을 명시적으로 지정
+  const userData = useContext(UserDataContext); // UserDataContext의 타입을 명시적으로 지정
 
   const [updatedUserData, setUpdatedUserData] = useState<Data[]>(
     userData || []
@@ -38,12 +37,15 @@ export const Home = () => {
   }, []); // 컴포넌트가 마운트될 때 데이터 가져오기
 
   const counselIncompleteCnt = updatedUserData.filter(
-    (item) => item.is_counsel_completed === false
+    (item) => item.status === "counselIncompleted"
   ).length;
   const counselCompleteCnt = updatedUserData.filter(
-    (item) => item.is_counsel_completed === true
+    (item) => item.status === "counselCompleted"
   ).length;
-
+  const installConfirmCnt = updatedUserData.filter(
+    (item) => item.status === "installConfirm"
+  ).length;
+  console.log(updatedUserData);
   return (
     <div className="Home">
       <Header text={"호반공조 관리자"} />
@@ -64,8 +66,14 @@ export const Home = () => {
         </div>
       </section>
       <section className="reservationInstallInfo">
-        <div className="reservationConfirmed">설치 확정건 {">"}</div>
-        <div>설치 완료건 {">"}</div>
+        <div
+          className="reservationConfirmed"
+          onClick={() => nav("/installConfirm")}
+        >
+          설치 확정건 {">"}
+          <span className="installConfirmCnt">{installConfirmCnt}건</span>
+        </div>
+        <div onClick={() => nav("/installFinished")}>설치 완료건 {">"}</div>
       </section>
     </div>
   );
