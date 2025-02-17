@@ -6,6 +6,11 @@ import "./CounselIncomplete.css";
 import { CurrentDataContext, UserDataContext } from "../App";
 import { getUserData } from "../apis/api";
 // 상담 미완료건
+type StatusType =
+  | "counselIncompleted"
+  | "counselCompleted"
+  | "installConfirm"
+  | "installFinished";
 
 type Data = {
   content: string;
@@ -17,14 +22,14 @@ type Data = {
   phone_number: string;
   region: string;
   type: string;
-  status: string;
+  status: StatusType;
 };
 
 export const CounselIncomplete = () => {
   const userData = useContext(UserDataContext);
   const [updatedUserData, setUpdatedUserData] = useState<Data[]>(
-    userData || []
-  ); // 초기값을 빈 배열로 설정
+    (userData as Data[]) || []
+  );
 
   const { currentDate } = useContext(CurrentDataContext);
   const selectedDate = `${currentDate.getFullYear()}-${currentDate.getMonth()}`;

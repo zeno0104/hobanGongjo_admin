@@ -6,30 +6,15 @@ import {
   updateInstallFinished,
 } from "../apis/api";
 import { useNavigate } from "react-router-dom";
-const userStatus = {
-  counselIncompleted: {
-    status: "상담 미완료",
-    text: "상담 완료",
-    // onClick: () => confirmBtnHandler(),
-    type: "reserve_confirm",
-  },
-  counselCompleted: {
-    status: "상담 완료",
-    text: "설치 확정",
-    // onClick: () => installConfirm(),
-    type: "reserve_confirm",
-  },
-  installConfirm: {
-    status: "설치 확정",
-    text: "설치 완료",
-    // onClick: () => installFinished(),
-    type: "reserve_confirm",
-  },
-  installFinished: {
-    status: "설치 완료",
-    type: "reserve_confirm",
-  },
-};
+
+// ✅ status 타입 정의
+type StatusType =
+  | "counselIncompleted"
+  | "counselCompleted"
+  | "installConfirm"
+  | "installFinished";
+
+// ✅ Data 타입 수정 (status를 StatusType으로 변경)
 type Data = {
   content: string;
   created_at: string;
@@ -40,23 +25,49 @@ type Data = {
   phone_number: string;
   region: string;
   type: string;
-  status: string;
+  status: StatusType;
 };
 
-export const DetailContent = ({ data }) => {
+const userStatus: Record<
+  StatusType,
+  { status: string; text?: string; type: string }
+> = {
+  counselIncompleted: {
+    status: "상담 미완료",
+    text: "상담 완료",
+    type: "reserve_confirm",
+  },
+  counselCompleted: {
+    status: "상담 완료",
+    text: "설치 확정",
+    type: "reserve_confirm",
+  },
+  installConfirm: {
+    status: "설치 확정",
+    text: "설치 완료",
+    type: "reserve_confirm",
+  },
+  installFinished: {
+    status: "설치 완료",
+    type: "reserve_confirm",
+  },
+};
+
+export const DetailContent = ({ data }: { data: Data }) => {
   const {
     id,
     content,
     install_location,
-    is_counsel_completed,
     name,
     phone_number,
     region,
     type,
     status,
   } = data;
+
   const nav = useNavigate();
   const changedProductType = JSON.parse(type);
+
   const confirmBtnHandler = async () => {
     if (window.confirm("상담을 완료하시겠습니까?")) {
       await updateCounselData(id);
@@ -64,6 +75,7 @@ export const DetailContent = ({ data }) => {
       nav("/", { replace: true });
     }
   };
+
   const installConfirm = async () => {
     if (window.confirm("설치를 확정하시겠습니까?")) {
       await updateInstallConfirmData(id);
@@ -71,6 +83,7 @@ export const DetailContent = ({ data }) => {
       nav("/", { replace: true });
     }
   };
+
   const installFinished = async () => {
     if (window.confirm("설치를 완료하시겠습니까?")) {
       await updateInstallFinished(id);
@@ -78,6 +91,7 @@ export const DetailContent = ({ data }) => {
       nav("/", { replace: true });
     }
   };
+
   const deleteBtnHandler = async () => {
     if (window.confirm("상담 내역을 삭제하시겠습니까?")) {
       await deleteUserData(id);
@@ -85,22 +99,18 @@ export const DetailContent = ({ data }) => {
       nav("/", { replace: true });
     }
   };
-  const buttonHandler = {
-    counselIncompleted: {
-      onClick: () => confirmBtnHandler(),
-    },
-    counselCompleted: {
-      onClick: () => installConfirm(),
-    },
-    installConfirm: {
-      onClick: () => installFinished(),
-    },
+
+  const buttonHandler: Partial<Record<StatusType, { onClick: () => void }>> = {
+    counselIncompleted: { onClick: confirmBtnHandler },
+    counselCompleted: { onClick: installConfirm },
+    installConfirm: { onClick: installFinished },
   };
+
   return (
     <>
       <section className="state">
         <div>상태</div>
-        <div>{is_counsel_completed ? "상담 완료" : "상담 미완료"}</div>
+        <div>{userStatus[status].status}</div>
       </section>
       <section className="name">
         <div>이름 or 상호</div>
@@ -132,11 +142,12 @@ export const DetailContent = ({ data }) => {
         <div className="content_text">{content}</div>
       </section>
       <section className="confirmBtn">
-        {status !== "installFinished" ? (
+        {status !== "installFinished" && userStatus[status]?.text ? (
           <div className="confirmBtnCon">
             <Button
-              text={userStatus[status].text}
-              onClick={buttonHandler[status].onClick}
+              text={userStatus[status].text!} // `text`는 `installFinished`에 없기 때문에 `!` 사용
+              // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+              onClick={buttonHandler[status]?.onClick!} // `onClick`이 없는 경우 방지
               type={"reserve_confirm"}
             />
             <div className="lineBar"></div>

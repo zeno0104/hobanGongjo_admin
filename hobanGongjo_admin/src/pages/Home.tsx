@@ -23,8 +23,8 @@ export const Home = () => {
   const userData = useContext(UserDataContext); // UserDataContext의 타입을 명시적으로 지정
 
   const [updatedUserData, setUpdatedUserData] = useState<Data[]>(
-    userData || []
-  ); // 초기값을 Data[]로 설정
+    (userData as Data[]) || []
+  );
 
   useEffect(() => {
     const fetchData = async () => {

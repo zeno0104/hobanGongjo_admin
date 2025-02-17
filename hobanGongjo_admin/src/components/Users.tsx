@@ -1,6 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import "./Users.css";
 
+// ✅ StatusType 정의 (userStatus의 key 값과 동일해야 함)
+type StatusType =
+  | "counselIncompleted"
+  | "counselCompleted"
+  | "installConfirm"
+  | "installFinished";
+
+// ✅ Data 타입에서 status의 타입을 StatusType으로 지정
 type Data = {
   content: string;
   created_at: string;
@@ -11,7 +19,7 @@ type Data = {
   phone_number: string;
   region: string;
   type: string;
-  status: string;
+  status: StatusType; // 🔹 string → StatusType으로 변경
 };
 
 // props 타입 정의
@@ -23,7 +31,12 @@ export const Users = ({ data }: UsersProps) => {
   const { id, name, region, created_at, status } = data;
   const nav = useNavigate();
   const date = new Date(created_at).toLocaleDateString();
-  const userStatus = {
+
+  // ✅ userStatus 객체의 타입 명확히 지정
+  const userStatus: Record<
+    StatusType,
+    { status: string; text?: string; type: string }
+  > = {
     counselIncompleted: {
       status: "상담 미완료",
       text: "상담 완료",
@@ -54,7 +67,10 @@ export const Users = ({ data }: UsersProps) => {
         });
       }}
     >
-      <div className={`state state_${status}`}>{userStatus[status].status}</div>
+      {/* ✅ status가 userStatus에 있는지 체크 후 접근 */}
+      <div className={`state state_${status}`}>
+        {status in userStatus ? userStatus[status].status : "알 수 없음"}
+      </div>
       <div className="userName">{name}</div>
       <div className="region">{region}</div>
       <div className="date">{date}</div>
