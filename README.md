@@ -30,10 +30,12 @@
 # 🔥기능
 | 홈 | 상담 미완료건 | 상담 완료건 |
 |---|---|---|
-| <p align="center"><img src="https://github.com/user-attachments/assets/e131c6e5-27a7-4ea8-bdcc-9c6f88a118a0" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/fe2054e3-98c5-48cd-8efb-274d4b8781b4" width="70%" /></p> | <p align="center"><img src="https://github.com/user-attachments/assets/0a1876e6-06fb-48c5-a01a-55c6d3f04a36" width="100%" /></p> |
+| <p align="center"><img src="https://github.com/user-attachments/assets/83df4de1-556a-4fbd-945c-c2b457bd206b" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/fe2054e3-98c5-48cd-8efb-274d4b8781b4" width="70%" /></p> | <p align="center"><img src="https://github.com/user-attachments/assets/0a1876e6-06fb-48c5-a01a-55c6d3f04a36" width="100%" /></p> |
 | 상세내용 | 푸시알림 |
 |---|---|
-| <p align="center"><img src="https://github.com/user-attachments/assets/1617bcd9-b8cb-4c69-aa28-bd3f3ae7b261" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/e5a4265a-d70b-45ec-805a-16758a11fd66" width="100%" /></p> |
+| <p align="center"><img src="https://github.com/user-attachments/assets/1617bcd9-b8cb-4c69-aa28-bd3f3ae7b261" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/e760253f-7e49-44b0-9032-6edc5fcfe8a8" width="100%" /></p> |
+
+
 
 # 🌱 추후 개발할 내용
 - 설치 확정건 리스트 및 설치 완료건 확인 리스트 기능
