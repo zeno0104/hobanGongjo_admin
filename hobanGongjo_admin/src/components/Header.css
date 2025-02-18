@@ -12,7 +12,8 @@
 }
 .Header .homeBtn {
   cursor: pointer;
-  width: 50px;
+  width: 30px;
+  color: white;
 }
 
 .Header .title {
