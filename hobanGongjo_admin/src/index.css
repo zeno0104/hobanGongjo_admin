@@ -10,7 +10,7 @@ html,
 body {
   margin: 0px;
   width: 100%;
-  /* overscroll-behavior: none; */
+  overscroll-behavior: none;
 }
 
 #root {

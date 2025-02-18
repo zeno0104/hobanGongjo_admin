@@ -9,6 +9,7 @@ import { getUserData } from "./apis/api";
 import { handleAllowNotification } from "./firebase/notification";
 import { InstallConfirm } from "./pages/InstallConfirm";
 import { InstallFinished } from "./pages/InstallFinished";
+import { Schedule } from "./pages/Schedule";
 type StatusType =
   | "counselIncompleted"
   | "counselCompleted"
@@ -79,6 +80,7 @@ function App() {
           <Route path="/details/:id" element={<Details />} />
           <Route path="/installConfirm" element={<InstallConfirm />} />
           <Route path="/installFinished" element={<InstallFinished />} />
+          <Route path="/schedule" element={<Schedule />} />
         </Routes>
       </CurrentDataContext.Provider>
     </UserDataContext.Provider>

@@ -20,7 +20,6 @@ self.addEventListener("push", function (e) {
       pushData.data?.body ||
       "새로운 알림이 있습니다.",
     icon: "/hoban_logo.jpg", // 아이콘에 이미지 추가
-    image: "/hoban_logo.jpg", // 알림 본문에 이미지 추가
   };
 
   console.log("📩 알림 데이터:", notificationTitle, notificationOptions);
