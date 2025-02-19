@@ -38,12 +38,12 @@ export const Users = ({ data }: UsersProps) => {
     { status: string; text?: string; type: string }
   > = {
     counselIncompleted: {
-      status: "상담 미완료",
+      status: "미완료",
       text: "상담 완료",
       type: "reserve_confirm",
     },
     counselCompleted: {
-      status: "상담 완료",
+      status: "완료",
       text: "설치 확정",
       type: "reserve_confirm",
     },
@@ -58,6 +58,7 @@ export const Users = ({ data }: UsersProps) => {
     },
   };
 
+  console.log(status);
   return (
     <div
       className="Users"

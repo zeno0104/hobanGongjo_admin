@@ -14,24 +14,40 @@
 }
 .Users .state {
   /* border-radius: 100%; */
-  flex: 0.2;
+  flex: 0.3;
   display: flex;
   justify-content: center;
 }
-.Users .state_true {
+.Users .state_counselIncompleted {
+  border-radius: 5px;
+  background-color: rgb(64, 105, 225);
+  color: white;
+  padding: 5px;
+}
+.Users .state_counselCompleted {
+  color: white;
+  padding: 5px;
+  background-color: grey;
+  border-radius: 5px;
+}
+.Users .state_installConfirm {
+  border-radius: 5px;
+  background-color: rgb(64, 105, 225);
+  color: white;
+  padding: 5px;
+}
+.Users .state_installFinished {
+  border-radius: 5px;
   background-color: grey;
   color: white;
-}
-.Users .state_false {
-  color: white;
-  background-color: rgb(64, 105, 225);
+  padding: 5px;
 }
 .Users .userName {
-  flex: 0.6;
+  flex: 0.5;
 }
 .Users .region {
   flex: 0.4;
 }
 .Users .date {
-  flex: 0.4;
+  flex: 0.7;
 }
