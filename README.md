@@ -32,13 +32,16 @@
 # 🔥기능
 | 홈 | 상담 미완료건 | 상담 완료건 |
 |---|---|---|
-| <p align="center"><img src="https://github.com/user-attachments/assets/83df4de1-556a-4fbd-945c-c2b457bd206b" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/fe2054e3-98c5-48cd-8efb-274d4b8781b4" width="70%" /></p> | <p align="center"><img src="https://github.com/user-attachments/assets/0a1876e6-06fb-48c5-a01a-55c6d3f04a36" width="100%" /></p> |
+| <p align="center"><img src="https://github.com/user-attachments/assets/00847dca-5bea-411f-8e73-5030ff51a227" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/6bb8709b-daae-400d-ad3a-0fefd3c440e7" width="65%" /></p> | <p align="center"><img src="https://github.com/user-attachments/assets/9f69d186-334b-46c2-9b9c-6a23317f49e3" width="100%" /></p> |
+| 설치 확정건 | 설치 완료건 | 
+|---|---|
+| <p align="center"><img src="https://github.com/user-attachments/assets/5eb78910-08e4-4c31-9c36-43a7c45038e6" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/d2599022-d50a-4353-ad83-828569b388d9" width="65%" /></p> |
 | 상세내용 | 푸시알림 |
 |---|---|
-| <p align="center"><img src="https://github.com/user-attachments/assets/1617bcd9-b8cb-4c69-aa28-bd3f3ae7b261" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/e760253f-7e49-44b0-9032-6edc5fcfe8a8" width="100%" /></p> |
-
+| <p align="center"><img src="https://github.com/user-attachments/assets/6c6998d8-4132-41ec-8425-0e327db6bf78" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/e760253f-7e49-44b0-9032-6edc5fcfe8a8" width="100%" /></p> |
 
 
 # 🌱 추후 개발할 내용
+- admin 로그인 ✔️
 - 스케줄 확인 페이지 구현
-- admin 로그인
+- 스케줄 추가하기
