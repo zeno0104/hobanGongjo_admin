@@ -52,7 +52,7 @@ export const CurrentDataContext = createContext<{
 
 function App() {
   const [userData, setUserData] = useState<Data[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
   const nav = useNavigate();
 
@@ -72,7 +72,7 @@ function App() {
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       } finally {
-        setLoading(false); // 🔹 항상 실행되도록 보장
+        // setLoading(false); // 🔹 항상 실행되도록 보장
       }
     };
 
