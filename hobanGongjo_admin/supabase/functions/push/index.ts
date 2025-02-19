@@ -26,7 +26,6 @@ Deno.serve(async (req) => {
     const { data, error } = await supabase
       .from('profiles')
       .select('fcm_token')
-      .eq('role', 'admin')
 
     if (error || !data || data.length === 0) {
       console.error("❌ Admin의 FCM 토큰을 찾을 수 없음:", error)
