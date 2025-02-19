@@ -35,12 +35,14 @@
   background-color: rgb(64, 105, 225);
   color: white;
   padding: 5px;
+  font-size: 19px;
 }
 .Users .state_installFinished {
   border-radius: 5px;
   background-color: grey;
   color: white;
   padding: 5px;
+  font-size: 19px;
 }
 .Users .userName {
   flex: 0.5;
