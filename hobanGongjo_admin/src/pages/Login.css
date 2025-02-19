@@ -1,0 +1,22 @@
+.Login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Login .logo_img {
+  width: 350px;
+}
+.Login .input {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid grey;
+  padding: 30px 30px;
+  border-radius: 20px;
+}
+
+.Login .email {
+  display: flex;
+  justify-content: space-between;
+}

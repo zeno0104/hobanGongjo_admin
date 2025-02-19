@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="theme-color" content="#FFF1A7" />
@@ -21,19 +21,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/sw.js") // PWA 캐싱을 위한 서비스 워커 등록
-          .then((registration) => {
-            console.log("Service worker registration succeeded:", registration);
-          })
-          .catch((err) => {
-            console.log("Service worker registration failed:", err);
-          });
-      } else {
-        console.log("Service workers are not supported.");
-      }
-    </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 import "../core/notification/settingFCM";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState, createContext } from "react";
 import { Home } from "./pages/Home";
 import { CounselIncomplete } from "./pages/CounselIncomplete";
@@ -10,6 +10,8 @@ import { handleAllowNotification } from "./firebase/notification";
 import { InstallConfirm } from "./pages/InstallConfirm";
 import { InstallFinished } from "./pages/InstallFinished";
 import { Schedule } from "./pages/Schedule";
+import { Login } from "./pages/Login";
+
 type StatusType =
   | "counselIncompleted"
   | "counselCompleted"
@@ -52,29 +54,47 @@ function App() {
   const [userData, setUserData] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const nav = useNavigate();
 
-  const fetchData = async () => {
-    const data = await getUserData();
-    if (data && data.length > 0) {
-      setUserData(data);
-    }
-    setLoading(false);
-  };
-
+  // 🔹 로그인 체크 후 데이터 가져오기
   useEffect(() => {
+    const adminId = localStorage.getItem("admin_id");
+
+    if (!adminId) {
+      nav("/login");
+      return; // 🔥 return 추가하여 fetchData 실행 방지
+    }
+
+    const fetchData = async () => {
+      try {
+        const data = await getUserData();
+        setUserData(data || []); // 🔹 데이터가 없어도 빈 배열 유지
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      } finally {
+        setLoading(false); // 🔹 항상 실행되도록 보장
+      }
+    };
+
     fetchData();
     handleAllowNotification();
-  }, []);
+  }, [nav]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // 🔹 로딩 중이면 로딩 화면 출력
+  // if (loading) {
+  //   return (
+  //     <div style={{ textAlign: "center", marginTop: "50px" }}>Loading...</div>
+  //   );
+  // }
 
   return (
-    <UserDataContext.Provider value={{ userData, fetchData, setUserData }}>
+    <UserDataContext.Provider
+      value={{ userData, fetchData: async () => {}, setUserData }}
+    >
       <CurrentDataContext.Provider value={{ currentDate, setCurrentDate }}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/counselIncomplete" element={<CounselIncomplete />} />
           <Route path="/counselComplete" element={<CounselComplete />} />
           <Route path="/details/:id" element={<Details />} />
