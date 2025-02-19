@@ -28,14 +28,14 @@ export const Home = () => {
           className="counselBtn counselIncomplete"
           onClick={() => nav("/counselIncomplete")}
         >
-          <div className="conuselText">상담 미완료건</div>
+          <div className="conuselText">상담 미완료</div>
           <div className="counselCnt">{counselIncompleteCnt}건</div>
         </div>
         <div
           className="counselBtn counselComplete"
           onClick={() => nav("/counselComplete")}
         >
-          <div className="conuselText">상담 완료건</div>
+          <div className="conuselText">상담 완료</div>
           <div className="counselCnt">{counselCompleteCnt}건</div>
         </div>
       </section>
