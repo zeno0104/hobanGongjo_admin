@@ -18,6 +18,8 @@ self.addEventListener("push", function (e) {
     icon: "/hoban_logo.jpg",
     data: { url: pushData.data?.screen || "/" }, // 클릭 시 이동할 URL 저장
     requireInteraction: true, // 알림이 자동으로 사라지지 않도록 설정
+    vibrate: [200, 100, 200], // 진동 효과 (알림 시 진동)
+    badge: "/hoban_logo.jpg", // 배지 아이콘 설정 (상단바에 표시되는 아이콘)
   };
 
   console.log("📩 알림 데이터:", notificationTitle, notificationOptions);
