@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
 
     // 🔥 모든 Admin에게 푸시 알림 전송
     for (const fcmToken of fcmTokens) {
-      await sendPushNotification(fcmToken, payload.record.body, accessToken)
+      await sendPushNotification(fcmToken, payload.record, accessToken)
     }
 
     return new Response(JSON.stringify({ message: "FCM 전송 성공" }), {
@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
 })
 
 // ✅ FCM 알림 전송 함수 (여러 개의 토큰에 대해 반복 실행됨)
-const sendPushNotification = async (fcmToken: string, body: string, accessToken: string) => {
+const sendPushNotification = async (fcmToken: string, record: WebhookPayload['record'], accessToken: string) => {
   try {
     const res = await fetch(
       `https://fcm.googleapis.com/v1/projects/${serviceAccount.project_id}/messages:send`,
@@ -70,13 +70,28 @@ const sendPushNotification = async (fcmToken: string, body: string, accessToken:
         body: JSON.stringify({
           message: {
             token: fcmToken,
-            data: {
+            notification: {
               title: "호반공조 알리미",
-              body: "새로운 상담 신청이 들어왔습니다.",
-              screen: "/" 
+              body: record.body
             },
-          },
-        }),
+            data: {
+              screen: "/consultation-request", // 앱에서 이 경로로 이동
+              id: record.id // 필요하면 알림 관련 데이터도 같이 전달
+            },
+            android: {
+              notification: {
+                click_action: "FLUTTER_NOTIFICATION_CLICK" // React Native에서 사용할 action
+              }
+            },
+            apns: {
+              payload: {
+                aps: {
+                  category: "NEW_CONSULTATION" // iOS용 클릭 액션
+                }
+              }
+            }
+          }
+        })
       }
     )
 
@@ -114,3 +129,4 @@ const getAccessToken = ({
     })
   })
 }
+
