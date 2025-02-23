@@ -33,18 +33,16 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "Admin의 FCM 토큰이 없음" }), { status: 400 })
     }
 
-    const fcmTokens = data.map((row) => row.fcm_token) // 🔥 모든 Admin의 FCM 토큰 리스트
+    const fcmTokens = data.map((row) => row.fcm_token)
     console.log("📨 FCM Tokens:", fcmTokens)
 
-    // 🔥 Firebase Access Token 생성
     const accessToken = await getAccessToken({
       clientEmail: serviceAccount.client_email,
       privateKey: serviceAccount.private_key,
     })
 
-    // 🔥 모든 Admin에게 푸시 알림 전송
     for (const fcmToken of fcmTokens) {
-      await sendPushNotification(fcmToken, payload.record, accessToken)
+      await sendPushNotification(fcmToken, payload.record.body, accessToken)
     }
 
     return new Response(JSON.stringify({ message: "FCM 전송 성공" }), {
@@ -56,8 +54,8 @@ Deno.serve(async (req) => {
   }
 })
 
-// ✅ FCM 알림 전송 함수 (여러 개의 토큰에 대해 반복 실행됨)
-const sendPushNotification = async (fcmToken: string, record: WebhookPayload['record'], accessToken: string) => {
+// ✅ FCM 알림 전송 (notification 대신 data 메시지 전송)
+const sendPushNotification = async (fcmToken: string, body: string, accessToken: string) => {
   try {
     const res = await fetch(
       `https://fcm.googleapis.com/v1/projects/${serviceAccount.project_id}/messages:send`,
@@ -70,28 +68,13 @@ const sendPushNotification = async (fcmToken: string, record: WebhookPayload['re
         body: JSON.stringify({
           message: {
             token: fcmToken,
-            notification: {
-              title: "호반공조 알리미",
-              body: record.body
-            },
             data: {
-              screen: "/consultation-request", // 앱에서 이 경로로 이동
-              id: record.id // 필요하면 알림 관련 데이터도 같이 전달
+              title: "호반공조 알리미",
+              body: "새로운 상담 신청이 들어왔습니다.",
+              screen: "/",  // 클릭 시 이동할 페이지
             },
-            android: {
-              notification: {
-                click_action: "FLUTTER_NOTIFICATION_CLICK" // React Native에서 사용할 action
-              }
-            },
-            apns: {
-              payload: {
-                aps: {
-                  category: "NEW_CONSULTATION" // iOS용 클릭 액션
-                }
-              }
-            }
-          }
-        })
+          },
+        }),
       }
     )
 
@@ -129,4 +112,3 @@ const getAccessToken = ({
     })
   })
 }
-

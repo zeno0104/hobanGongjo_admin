@@ -12,14 +12,12 @@ self.addEventListener("push", function (e) {
   const pushData = e.data.json();
   console.log("🔹 Push Event Data:", pushData);
 
-  const notificationTitle =
-    pushData.notification?.title || pushData.data?.title || "알림";
+  const notificationTitle = pushData.data?.title || "알림";
   const notificationOptions = {
-    body:
-      pushData.notification?.body ||
-      pushData.data?.body ||
-      "새로운 알림이 있습니다.",
-    icon: "/hoban_logo.jpg", // 아이콘에 이미지 추가
+    body: pushData.data?.body || "새로운 알림이 있습니다.",
+    icon: "/hoban_logo.jpg",
+    data: { url: pushData.data?.screen || "/" }, // 클릭 시 이동할 URL 저장
+    requireInteraction: true, // 알림이 자동으로 사라지지 않도록 설정
   };
 
   console.log("📩 알림 데이터:", notificationTitle, notificationOptions);
@@ -28,39 +26,22 @@ self.addEventListener("push", function (e) {
     self.registration.showNotification(notificationTitle, notificationOptions)
   );
 });
+
 self.addEventListener("notificationclick", function (event) {
-  event.preventDefault();
-  // 알림창 닫기
-  event.notification.close();
+  event.notification.close(); // 알림 닫기
 
-  // 이동할 url
-  // 아래의 event.notification.data는 위의 푸시 이벤트를 한 번 거쳐서 전달 받은 options.data에 해당한다.
-  // api에 직접 전달한 데이터와 혼동 주의
-  const urlToOpen = event.notification.data.click_action;
+  // 클릭하면 이동할 URL (기본값: 루트 "/")
+  const urlToOpen = event.notification.data?.screen || "/";
 
-  // 클라이언트에 해당 사이트가 열려있는지 체크
   const promiseChain = clients
-    .matchAll({
-      type: "window",
-      includeUncontrolled: true,
-    })
-    .then(function (windowClients) {
-      let matchingClient = null;
-
-      for (let i = 0; i < windowClients.length; i++) {
-        const windowClient = windowClients[i];
-        if (windowClient.url.includes(urlToOpen)) {
-          matchingClient = windowClient;
-          break;
+    .matchAll({ type: "window", includeUncontrolled: true })
+    .then((windowClients) => {
+      for (const client of windowClients) {
+        if (client.url.includes(urlToOpen)) {
+          return client.focus();
         }
       }
-
-      // 열려있다면 focus, 아니면 새로 open
-      if (matchingClient) {
-        return matchingClient.focus();
-      } else {
-        return clients.openWindow(urlToOpen);
-      }
+      return clients.openWindow(urlToOpen);
     });
 
   event.waitUntil(promiseChain);
