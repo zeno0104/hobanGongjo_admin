@@ -28,6 +28,7 @@ type UsersProps = {
 };
 
 export const Users = ({ data }: UsersProps) => {
+  console.log(`Users에서 data: ${JSON.stringify(data)}`);
   const { id, name, region, created_at, status } = data;
   const nav = useNavigate();
   const date = new Date(created_at).toLocaleDateString();

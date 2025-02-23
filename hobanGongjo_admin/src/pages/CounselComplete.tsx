@@ -31,11 +31,7 @@ export const CounselComplete = () => {
     .sort(
       (a, b) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    )
-    .sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    ); // 최신순 정렬
+    );
 
   return (
     <div className="CounselIncomplete">
