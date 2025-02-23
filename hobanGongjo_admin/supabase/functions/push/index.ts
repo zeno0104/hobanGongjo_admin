@@ -73,6 +73,7 @@ const sendPushNotification = async (fcmToken: string, body: string, accessToken:
             data: {
               title: "호반공조 알리미",
               body: "새로운 상담 신청이 들어왔습니다.",
+              screen: "/" 
             },
           },
         }),
