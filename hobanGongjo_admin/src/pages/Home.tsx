@@ -7,7 +7,6 @@ import { UserDataContext } from "../App";
 export const Home = () => {
   const nav = useNavigate();
   const { userData } = useContext(UserDataContext); // UserDataContext의 타입을 명시적으로 지정
-  console.log("Home에서 userData: ", userData);
   const counselIncompleteCnt = userData.filter(
     (item) => item.status === "counselIncompleted"
   ).length;

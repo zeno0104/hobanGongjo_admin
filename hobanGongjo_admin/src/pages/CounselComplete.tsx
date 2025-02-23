@@ -20,12 +20,22 @@ export const CounselComplete = () => {
   }
 
   // ✅ status 필드가 있는 데이터만 필터링
-  const filteredData = userData.filter((item) => {
-    const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
-      item.created_at
-    ).getMonth()}`;
-    return item.status === "counselCompleted" && userDate === selectedDate;
-  });
+  // ✅ 최신순 정렬 추가 (created_at 기준 내림차순 정렬)
+  const filteredData = userData
+    .filter((item) => {
+      const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
+        item.created_at
+      ).getMonth()}`;
+      return item.status === "counselCompleted" && userDate === selectedDate;
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    ); // 최신순 정렬
 
   return (
     <div className="CounselIncomplete">

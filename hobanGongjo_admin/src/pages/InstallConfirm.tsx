@@ -27,7 +27,11 @@ export const InstallConfirm = () => {
       ).getMonth()}`;
 
       return item.status === "installConfirm" && userDate === selectedDate;
-    });
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
 
   return (
     <div className="CounselIncomplete">

@@ -58,7 +58,6 @@ export const Users = ({ data }: UsersProps) => {
     },
   };
 
-  console.log(status);
   return (
     <div
       className="Users"

@@ -32,3 +32,9 @@
   display: flex;
   gap: 10px;
 }
+/* 메모 */
+.Details .memo {
+}
+.Details .memo .memo_text {
+  width: 100%;
+}

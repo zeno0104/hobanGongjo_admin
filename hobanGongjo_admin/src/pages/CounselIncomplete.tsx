@@ -19,12 +19,17 @@ export const CounselIncomplete = () => {
   }
 
   // 각 요소가 Data 타입인지 확인
-  const filterdData = userData.filter((item) => {
-    const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
-      item.created_at
-    ).getMonth()}`;
-    return item.status === "counselIncompleted" && userDate === selectedDate;
-  });
+  const filterdData = userData
+    .filter((item) => {
+      const userDate = `${new Date(item.created_at).getFullYear()}-${new Date(
+        item.created_at
+      ).getMonth()}`;
+      return item.status === "counselIncompleted" && userDate === selectedDate;
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
 
   return (
     <div className="CounselIncomplete">

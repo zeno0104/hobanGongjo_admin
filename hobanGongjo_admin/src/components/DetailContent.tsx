@@ -8,7 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserDataContext } from "../App";
-
+import "./DetailContent.css";
 // ✅ status 타입 정의
 type StatusType =
   | "counselIncompleted"
@@ -137,6 +137,7 @@ export const DetailContent = ({ data }: { data: Data }) => {
         <div>지역</div>
         <div>{region}</div>
       </section>
+
       <section className="installLocation">
         <div>설치 장소</div>
         <div>{install_location}</div>
@@ -149,6 +150,15 @@ export const DetailContent = ({ data }: { data: Data }) => {
         <div className="content_title">문의 내용</div>
         <div className="content_text">{content}</div>
       </section>
+      {/* <section className="memo">
+        <div>메모</div>
+        <div>
+          <textarea className="memo_text"></textarea>
+        </div>
+        <div>
+          <Button text="수정하기" />
+        </div>
+      </section> */}
       <section className="confirmBtn">
         {status !== "installFinished" && userStatus[status]?.text ? (
           <div className="confirmBtnCon">

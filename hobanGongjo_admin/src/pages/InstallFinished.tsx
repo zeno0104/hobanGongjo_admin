@@ -1,29 +1,62 @@
-import { useContext } from "react";
-import { CurrentDataContext, UserDataContext } from "../App";
+import { useContext, useEffect, useState } from "react";
+import { CurrentDataContext } from "../App";
 import { Header } from "../components/Header";
 import { Monthly } from "../components/Monthly";
 import { Users } from "../components/Users";
+import { supabase } from "../utils/SupabaseClient";
+type StatusType =
+  | "counselIncompleted"
+  | "counselCompleted"
+  | "installConfirm"
+  | "installFinished";
 
-// 상태 타입을 명확하게 정의
+type Data = {
+  content: string;
+  created_at: string;
+  id: number;
+  install_location: string;
+  install_type: string;
+  name: string;
+  phone_number: string;
+  region: string;
+  type: string;
+  status: StatusType;
+};
 
 export const InstallFinished = () => {
-  // 🔥 useContext의 타입을 올바르게 구조 분해 할당
-  const { userData } = useContext(UserDataContext);
-  const { currentDate } = useContext(CurrentDataContext);
+  // userData 상태의 타입을 Data[]로 명확히 설정
+  const [userData, setUserData] = useState<Data[]>([]);
 
+  const { currentDate } = useContext(CurrentDataContext);
   const selectedDate = `${currentDate.getFullYear()}-${currentDate.getMonth()}`;
 
-  // userData가 배열이 아닐 경우 예외 처리
-  if (!Array.isArray(userData)) {
-    console.error("userData는 배열이 아닙니다.");
-    return <div>데이터를 불러올 수 없습니다.</div>; // UI 처리
-  }
+  // install_finished 데이터 가져오기
+  const getInstallFinishedData = async () => {
+    const { data: install_finished, error } = await supabase
+      .from("install_finished")
+      .select("*");
 
-  // 🔥 status 값이 없을 경우 기본값을 `StatusType`으로 변환하여 설정
+    if (error) {
+      console.error("데이터 로드 오류:", error);
+      return;
+    }
+
+    if (!Array.isArray(install_finished)) {
+      console.error("userData는 배열이 아닙니다.");
+      return;
+    }
+    setUserData(install_finished);
+  };
+
+  useEffect(() => {
+    getInstallFinishedData();
+  }, []);
+
+  // status 값이 없을 경우 기본값을 'counselIncompleted'로 설정하고 필터링
   const filteredData = userData
     .map((item) => ({
       ...item,
-      status: item.status ?? "counselIncompleted", // 🔥 타입 강제 변환
+      status: item.status ?? "installFinished", // StatusType 값으로 설정
     }))
     .filter((item) => {
       if (!item || typeof item.created_at !== "string") {
@@ -36,7 +69,11 @@ export const InstallFinished = () => {
       ).getMonth()}`;
 
       return item.status === "installFinished" && userDate === selectedDate;
-    });
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
 
   return (
     <div className="CounselIncomplete">
