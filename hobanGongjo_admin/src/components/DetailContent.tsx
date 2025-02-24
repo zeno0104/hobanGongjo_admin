@@ -6,9 +6,10 @@ import {
   updateInstallFinished,
 } from "../apis/api";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserDataContext } from "../App";
 import "./DetailContent.css";
+import { supabase } from "../utils/SupabaseClient";
 // ✅ status 타입 정의
 type StatusType =
   | "counselIncompleted"
@@ -28,6 +29,8 @@ type Data = {
   region: string;
   type: string;
   status: StatusType;
+  memo: string;
+  address: string;
 };
 
 const userStatus: Record<
@@ -65,10 +68,16 @@ export const DetailContent = ({ data }: { data: Data }) => {
     region,
     type,
     status,
+    memo,
+    address,
   } = data;
   const { fetchData, userData, setUserData } = useContext(UserDataContext);
   const nav = useNavigate();
   const changedProductType = JSON.parse(type);
+  const [memoState, setMemoState] = useState(true);
+  const [memoInfo, setMemoInfo] = useState(memo);
+  const [addressState, setAddressState] = useState(true);
+  const [addressInfo, setAddressInfo] = useState(address);
 
   const confirmBtnHandler = async () => {
     if (window.confirm("상담을 완료하시겠습니까?")) {
@@ -113,7 +122,66 @@ export const DetailContent = ({ data }: { data: Data }) => {
     counselCompleted: { onClick: installConfirm },
     installConfirm: { onClick: installFinished },
   };
+  // 메모
+  const memoEditHandler = () => {
+    setMemoState(false);
+  };
+  const memoConfirmHandler = async () => {
+    const { error } = await supabase
+      .from("guest")
+      .update({ memo: memoInfo })
+      .eq("id", id);
 
+    if (error) {
+      window.alert(error.message);
+      return;
+    }
+
+    // 현재 userData를 업데이트하여 변경 사항 반영
+    const updatedData = userData.map((item) =>
+      item.id === id ? { ...item, memo: memoInfo } : item
+    );
+
+    setUserData(updatedData);
+    console.log(userData);
+    setMemoState(true);
+  };
+
+  const memoInfoHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMemoInfo(e.target.value);
+  };
+  // 주소
+  const addressEditHandler = () => {
+    setAddressState(false);
+  };
+  const addressConfirmHandler = async () => {
+    const { error } = await supabase
+      .from("guest")
+      .update({ address: addressInfo })
+      .eq("id", id);
+
+    if (error) {
+      window.alert(error.message);
+      return;
+    }
+
+    // 현재 userData를 업데이트하여 변경 사항 반영
+    const updatedData = userData.map((item) =>
+      item.id === id ? { ...item, address: addressInfo } : item
+    );
+
+    setUserData(updatedData);
+    console.log(userData);
+    setAddressState(true);
+  };
+  const addressInfoHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setAddressInfo(e.target.value);
+  };
+  const openTMap = () => {
+    const encodedAddress = encodeURIComponent(address);
+    const tmapUrl = `tmap://search?name=${encodedAddress}`;
+    window.location.href = tmapUrl;
+  };
   return (
     <>
       <section className="state">
@@ -133,6 +201,31 @@ export const DetailContent = ({ data }: { data: Data }) => {
           </a>
         </div>
       </section>
+
+      <section className="address">
+        <div>주소</div>
+        <div>
+          <textarea
+            readOnly={false}
+            className="address_text"
+            disabled={addressState}
+            onChange={addressInfoHandler}
+            value={addressState ? address : addressInfo}
+          ></textarea>
+        </div>
+        <div className="addressInfo">
+          <div>
+            <Button
+              onClick={
+                addressState ? addressEditHandler : addressConfirmHandler
+              }
+              text={addressState ? "수정" : "확인"}
+              type="addressBtn"
+            />
+          </div>
+          <div>{<Button text="티맵" type="tmapBtn" onClick={openTMap} />}</div>
+        </div>
+      </section>
       <section className="region">
         <div>지역</div>
         <div>{region}</div>
@@ -150,15 +243,25 @@ export const DetailContent = ({ data }: { data: Data }) => {
         <div className="content_title">문의 내용</div>
         <div className="content_text">{content}</div>
       </section>
-      {/* <section className="memo">
+      <section className="memo">
         <div>메모</div>
         <div>
-          <textarea className="memo_text"></textarea>
+          <textarea
+            readOnly={false}
+            className="memo_text"
+            disabled={memoState}
+            onChange={memoInfoHandler}
+            value={memoState ? memo : memoInfo}
+          ></textarea>
         </div>
         <div>
-          <Button text="수정하기" />
+          <Button
+            onClick={memoState ? memoEditHandler : memoConfirmHandler}
+            text={memoState ? "수정" : "확인"}
+            type="memoBtn"
+          />
         </div>
-      </section> */}
+      </section>
       <section className="confirmBtn">
         {status !== "installFinished" && userStatus[status]?.text ? (
           <div className="confirmBtnCon">

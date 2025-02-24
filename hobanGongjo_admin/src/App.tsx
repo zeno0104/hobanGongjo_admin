@@ -29,6 +29,8 @@ type Data = {
   region: string;
   type: string;
   status: StatusType;
+  memo: string;
+  address: string;
 };
 
 // UserDataContext 타입 수정

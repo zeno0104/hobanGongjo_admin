@@ -23,6 +23,8 @@ type Data = {
   region: string;
   type: string;
   status: StatusType;
+  memo: string;
+  address: string;
 };
 
 export const Details = () => {

@@ -20,6 +20,8 @@ type Data = {
   region: string;
   type: string;
   status: StatusType; // 🔹 string → StatusType으로 변경
+  memo: string;
+  address: string;
 };
 
 // props 타입 정의
