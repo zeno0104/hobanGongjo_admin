@@ -39,16 +39,16 @@
 }
 
 .Details .address .address_text {
-  width: 280px;
+  width: 230px;
   height: 50px;
   resize: vertical;
-  font-size: 14px;
+  font-size: 15px;
 }
 .Details .memo .memo_text {
-  width: 300px;
-  height: 80px;
+  width: 230px;
+  height: 150px;
   resize: vertical;
-  font-size: 14px;
+  font-size: 15px;
 }
 /* 주소 */
 .Details .address {
