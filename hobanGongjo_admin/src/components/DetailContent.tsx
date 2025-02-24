@@ -185,15 +185,15 @@ export const DetailContent = ({ data }: { data: Data }) => {
   return (
     <>
       <section className="state">
-        <div>상태</div>
+        <div className="title">상태</div>
         <div>{userStatus[status].status}</div>
       </section>
       <section className="name">
-        <div>이름 or 상호</div>
+        <div className="title">이름 or 상호</div>
         <div>{name}</div>
       </section>
       <section className="phone_number">
-        <div>연락처</div>
+        <div className="title">연락처</div>
         <div>{phone_number}</div>
         <div className="phone_info">
           <a href={`tel:${phone_number}`}>
@@ -203,7 +203,7 @@ export const DetailContent = ({ data }: { data: Data }) => {
       </section>
 
       <section className="address">
-        <div>주소</div>
+        <div className="title">주소</div>
         <div>
           <textarea
             readOnly={false}
@@ -227,24 +227,24 @@ export const DetailContent = ({ data }: { data: Data }) => {
         </div>
       </section>
       <section className="region">
-        <div>지역</div>
+        <div className="title">지역</div>
         <div>{region}</div>
       </section>
 
       <section className="installLocation">
-        <div>설치 장소</div>
+        <div className="title">설치 장소</div>
         <div>{install_location}</div>
       </section>
       <section className="installProduct">
-        <div>설치 기기</div>
+        <div className="title">설치 기기</div>
         <div>{changedProductType.join(", ")}</div>
       </section>
       <section className="content">
-        <div className="content_title">문의 내용</div>
+        <div className="content_title title">문의 내용</div>
         <div className="content_text">{content}</div>
       </section>
       <section className="memo">
-        <div>메모</div>
+        <div className="title">메모</div>
         <div>
           <textarea
             readOnly={false}
