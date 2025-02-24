@@ -54,12 +54,12 @@ export const Home = () => {
           <span className="installText">설치 완료건 {">"}</span>
           <span className="installConfirmCnt">{installFinishedCnt}건</span>
         </div>
-        {/* <div
+        <div
           className="reservationConfirmedFinished"
           onClick={() => nav("/schedule")}
         >
           <span className="installText">스케줄 확인 {">"}</span>
-        </div> */}
+        </div>
       </section>
     </div>
   );
