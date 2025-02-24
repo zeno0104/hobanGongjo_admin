@@ -58,7 +58,7 @@ export const Home = () => {
           className="reservationConfirmedFinished"
           onClick={() => nav("/schedule")}
         >
-          <span className="installText">스케줄 확인 {">"}</span>
+          <span className="installText">캘린더 {">"}</span>
         </div>
       </section>
     </div>
