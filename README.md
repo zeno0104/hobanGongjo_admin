@@ -38,12 +38,11 @@
 | <p align="center"><img src="https://github.com/user-attachments/assets/9f69d186-334b-46c2-9b9c-6a23317f49e3" width="100%" /></p> | <p align="center"><img src="https://github.com/user-attachments/assets/5eb78910-08e4-4c31-9c36-43a7c45038e6" width="70%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/d2599022-d50a-4353-ad83-828569b388d9" width="100%" /></p> |
 | 상세내용 | 푸시알림 |
 |---|---|
-| <p align="center"><img src="https://github.com/user-attachments/assets/6c6998d8-4132-41ec-8425-0e327db6bf78" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/e760253f-7e49-44b0-9032-6edc5fcfe8a8" width="100%" /></p> |
-
+| <p align="center"><img src="https://github.com/user-attachments/assets/da076a45-2bad-4766-bd3d-59a71d60bcfe" width="100%"/></p> | <p align="center"><img src="https://github.com/user-attachments/assets/3f23758d-cb0e-4735-b7f7-2626176263ce" width="100%" /></p> |
 
 
 # 🌱 추후 개발할 내용
 - admin 로그인 ✔️ (2025-02-19)
+- 메모(주소 저장 or 기타 정보 저장) ✔️ (2025-02-24)
+- 티맵 이동(주소 자동 입력되게끔 구현하기) ✔️ (2025-02-24)
 - 스케줄 확인 페이지 구현
-- 메모(주소 저장 or 기타 정보 저장)
-- 티맵 연동
