@@ -63,3 +63,7 @@
 .title {
   font-weight: bold;
 }
+.tmapImg {
+  width: 50px;
+  border-radius: 50px;
+}

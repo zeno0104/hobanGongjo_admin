@@ -223,7 +223,9 @@ export const DetailContent = ({ data }: { data: Data }) => {
               type="addressBtn"
             />
           </div>
-          <div>{<Button text="티맵" type="tmapBtn" onClick={openTMap} />}</div>
+          <div onClick={openTMap}>
+            <img src="/tmap2.webp" alt="" className="tmapImg" />
+          </div>
         </div>
       </section>
       <section className="region">
