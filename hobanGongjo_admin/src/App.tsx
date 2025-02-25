@@ -11,27 +11,7 @@ import { InstallConfirm } from "./pages/InstallConfirm";
 import { InstallFinished } from "./pages/InstallFinished";
 import { Schedule } from "./pages/Schedule";
 import { Login } from "./pages/Login";
-
-type StatusType =
-  | "counselIncompleted"
-  | "counselCompleted"
-  | "installConfirm"
-  | "installFinished";
-
-type Data = {
-  id: number;
-  content: string;
-  created_at: string;
-  install_location: string;
-  install_type: string;
-  name: string;
-  phone_number: string;
-  region: string;
-  type: string;
-  status: StatusType;
-  memo: string;
-  address: string;
-};
+import { Data } from "./utils/types";
 
 // UserDataContext 타입 수정
 export const UserDataContext = createContext<{
@@ -54,7 +34,7 @@ export const CurrentDataContext = createContext<{
 
 function App() {
   const [userData, setUserData] = useState<Data[]>([]);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
   const nav = useNavigate();
 
@@ -74,7 +54,7 @@ function App() {
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       } finally {
-        // setLoading(false); // 🔹 항상 실행되도록 보장
+        setLoading(false); // 🔹 항상 실행되도록 보장
       }
     };
 
@@ -82,12 +62,11 @@ function App() {
     handleAllowNotification();
   }, [nav]);
 
-  // 🔹 로딩 중이면 로딩 화면 출력
-  // if (loading) {
-  //   return (
-  //     <div style={{ textAlign: "center", marginTop: "50px" }}>Loading...</div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "50px" }}>Loading...</div>
+    );
+  }
 
   return (
     <UserDataContext.Provider

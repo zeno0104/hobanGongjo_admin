@@ -1,10 +1,7 @@
+import { ButtonType } from "../utils/types";
 import "./Button.css";
-type Button = {
-  text: string;
-  onClick: () => void;
-  type?: string;
-};
-export const Button = ({ text, onClick, type }: Button) => {
+
+export const Button = ({ text, onClick, type }: ButtonType) => {
   return (
     <button className={`button button_${type}`} onClick={onClick}>
       {text}

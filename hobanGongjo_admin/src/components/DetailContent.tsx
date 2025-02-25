@@ -10,28 +10,8 @@ import { useContext, useState } from "react";
 import { UserDataContext } from "../App";
 import "./DetailContent.css";
 import { supabase } from "../utils/SupabaseClient";
-// ✅ status 타입 정의
-type StatusType =
-  | "counselIncompleted"
-  | "counselCompleted"
-  | "installConfirm"
-  | "installFinished";
-
-// ✅ Data 타입 수정 (status를 StatusType으로 변경)
-type Data = {
-  content: string;
-  created_at: string;
-  id: number;
-  install_location: string;
-  install_type: string;
-  name: string;
-  phone_number: string;
-  region: string;
-  type: string;
-  status: StatusType;
-  memo: string;
-  address: string;
-};
+import { Data, StatusType } from "../utils/types";
+import { DateComponent } from "./DateComponent";
 
 const userStatus: Record<
   StatusType,
@@ -70,6 +50,7 @@ export const DetailContent = ({ data }: { data: Data }) => {
     status,
     memo,
     address,
+    installDate,
   } = data;
   const { fetchData, userData, setUserData } = useContext(UserDataContext);
   const nav = useNavigate();
@@ -178,12 +159,35 @@ export const DetailContent = ({ data }: { data: Data }) => {
     setAddressInfo(e.target.value);
   };
   const openTMap = () => {
+    if (address.length === 0) {
+      window.alert("주소를 입력하세요.");
+      return;
+    }
     const encodedAddress = encodeURIComponent(address);
     const tmapUrl = `tmap://search?name=${encodedAddress}`;
     window.location.href = tmapUrl;
   };
+  const [dateInfo, setDateInfo] = useState(new Date());
+
+  const dateUpdateHandler = async () => {
+    if (window.confirm("날짜를 수정하시겠습니까?")) {
+      const { data, error } = await supabase
+        .from("guest")
+        .update({ installDate: dateInfo })
+        .eq("id", id)
+        .select();
+      window.alert("날짜를 수정하였습니다.");
+    }
+  };
   return (
     <>
+      <section className="installDate">
+        <div className="title">설치일</div>
+        <div>
+          <DateComponent installDate={installDate} setDateInfo={setDateInfo} />
+        </div>
+        <Button text={"수정"} onClick={dateUpdateHandler} />
+      </section>
       <section className="state">
         <div className="title">상태</div>
         <div>{userStatus[status].status}</div>

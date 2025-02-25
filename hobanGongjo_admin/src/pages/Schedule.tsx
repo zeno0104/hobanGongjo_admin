@@ -17,8 +17,14 @@ export function Schedule() {
     )
     .map((item) => ({
       title: item.name,
-      start: new Date(item.created_at).toISOString().split("T")[0], // YYYY-MM-DD 포맷 변환
-      backgroundColor: item.status === "installFinished" ? "grey" : "", // installFinished면 회색
+      start: new Date(
+        new Date(item.installDate).setDate(
+          new Date(item.installDate).getDate() + 1
+        )
+      )
+        .toISOString()
+        .split("T")[0], // 하루 추가 후 YYYY-MM-DD 포맷 변환
+      backgroundColor: item.status === "installFinished" ? "grey" : "",
     }));
 
   console.log(`events = ${JSON.stringify(events)}`);

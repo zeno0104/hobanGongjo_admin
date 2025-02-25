@@ -2,11 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // 로그인 성공 후 이동
 import "./Login.css";
 import { supabase } from "../utils/SupabaseClient";
-
-interface User {
-  email: string;
-  password: string;
-}
+import { User } from "../utils/types";
 
 export const Login = () => {
   const [userInfo, setUserInfo] = useState<User>({

@@ -5,7 +5,10 @@
   border-bottom: 1px solid grey;
   padding: 15px 15px;
 }
-
+.Details .installDate {
+  /* display: flex; */
+  /* justify-content: ; */
+}
 .Details .phone_number .phone_img {
   width: 50px;
 }

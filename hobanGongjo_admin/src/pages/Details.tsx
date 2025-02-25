@@ -4,28 +4,9 @@ import "./Details.css";
 import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "../App";
 import { DetailContent } from "../components/DetailContent";
+import { Data } from "../utils/types";
 
 // 🔥 Data 타입 정의 (일관성 유지)
-type StatusType =
-  | "counselIncompleted"
-  | "counselCompleted"
-  | "installConfirm"
-  | "installFinished";
-
-type Data = {
-  id: number;
-  content: string;
-  created_at: string;
-  install_location: string;
-  install_type: string;
-  name: string;
-  phone_number: string;
-  region: string;
-  type: string;
-  status: StatusType;
-  memo: string;
-  address: string;
-};
 
 export const Details = () => {
   const params = useParams();

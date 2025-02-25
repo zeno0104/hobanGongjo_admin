@@ -14,9 +14,11 @@
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/react": "^6.1.15",
     "@supabase/supabase-js": "^2.48.1",
+    "date-fns": "^4.1.0",
     "firebase": "^11.3.1",
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
+    "react-datepicker": "^8.1.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",
     "uuid": "^11.0.5"
