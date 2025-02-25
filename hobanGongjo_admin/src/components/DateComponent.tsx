@@ -7,22 +7,23 @@ export const DateComponent = ({
   installDate,
   setDateInfo,
 }: {
-  installDate: string | Date | null;
-  setDateInfo: (date: Date | null) => void;
+  installDate: string;
+  setDateInfo: React.Dispatch<React.SetStateAction<Date | null>>;
 }) => {
-  const initialDate = installDate ? new Date(installDate) : null;
-  const [startDate, setStartDate] = useState<Date | null>(initialDate);
+  const [startDate, setStartDate] = useState<Date | null>(
+    installDate ? new Date(installDate) : null
+  );
 
   const dateHandler = (date: Date | null) => {
     setStartDate(date);
-    setDateInfo(date);
+    setDateInfo(date); // Date | null 타입으로 전달
   };
 
   return (
     <div>
       <DatePicker
         selected={startDate}
-        onChange={(date) => dateHandler(date)}
+        onChange={dateHandler}
         locale={ko}
         dateFormat="yyyy년 MM월 dd일"
         customInput={<CustomButton selectedDate={startDate} />}

@@ -167,11 +167,13 @@ export const DetailContent = ({ data }: { data: Data }) => {
     const tmapUrl = `tmap://search?name=${encodedAddress}`;
     window.location.href = tmapUrl;
   };
-  const [dateInfo, setDateInfo] = useState(new Date());
+  const [dateInfo, setDateInfo] = useState<Date | null>(
+    installDate ? new Date(installDate) : null
+  );
 
   const dateUpdateHandler = async () => {
     if (window.confirm("날짜를 수정하시겠습니까?")) {
-      const { data, error } = await supabase
+      await supabase
         .from("guest")
         .update({ installDate: dateInfo })
         .eq("id", id)
