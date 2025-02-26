@@ -12,6 +12,7 @@
 </aside>
 
 # 🛠️사용 기술 및 라이브러리
+<h3>기술</h3>
 <ul>
   <li>HTML/CSS</li>
   <li>React</li>
@@ -20,6 +21,11 @@
   <li>Firebase(푸시알림 기능)</li>
   <li>PWA</li>
 </ul>
+<h3>라이브러리</h3>
+<ul>
+  <li>react-fullcalendar</li>
+</ul>
+
 
 # 💻 담당한 기능
 - 상담 신청 내역 확인
