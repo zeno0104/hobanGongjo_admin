@@ -34,7 +34,7 @@ export const CurrentDataContext = createContext<{
 
 function App() {
   const [userData, setUserData] = useState<Data[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
   const nav = useNavigate();
 
@@ -53,20 +53,21 @@ function App() {
         setUserData(data || []); // 🔹 데이터가 없어도 빈 배열 유지
       } catch (error) {
         console.error("Failed to fetch user data:", error);
-      } finally {
-        setLoading(false); // 🔹 항상 실행되도록 보장
       }
+      // finally {
+      //   setLoading(false); // 🔹 항상 실행되도록 보장
+      // }
     };
 
     fetchData();
     handleAllowNotification();
   }, [nav]);
 
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "50px" }}>Loading...</div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div style={{ textAlign: "center", marginTop: "50px" }}>Loading...</div>
+  //   );
+  // }
 
   return (
     <UserDataContext.Provider
